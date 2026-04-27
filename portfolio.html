@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <!--PRIMARY SEO-->
     <title>Portfolio · Veloce Tech</title>
+    <meta name="description" content="Explore our portfolio of real-world digital projects: websites, e-commerce, management systems, and more. Built for African businesses." />
+    <meta name="keywords" content="portfolio, web design projects, graphic design portfolio, Kenya, Veloce Tech" />
+    <meta name="author" content="Veloce Tech Company"/>
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://velocetechcompany.com/portfolio.html" />
+    <!-- Open Graph -->
+    <meta property="og:title" content="Portfolio · Veloce Tech" />
+    <meta property="og:description" content="See our latest work: hotel websites, retail shops, school systems, and custom furniture builders." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://velocetechcompany.com/portfolio.html" />
+    <meta property="og:image" content="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg" />
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Portfolio · Veloce Tech" />
+    <meta name="twitter:description" content="Quality digital projects. Real results." />
+    <meta name="twitter:image" content="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg" />
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Veloce Tech Company",
+      "url": "https://velocetechcompany.com/",
+      "description": "Portfolio of digital projects including hotels, retail, restaurants, carpentry, hospitals, and school systems."
+    }
+    </script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Enhanced portfolio card styles */
         .portfolio-item {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
@@ -130,13 +156,12 @@
                 <div class="hero-content" style="max-width: 100%; text-align: center;">
                     <h1 class="hero-title">Our <span class="title-accent">Portfolio</span></h1>
                     <p class="hero-description" style="max-width: 800px; margin: 0 auto;">
-                        A showcase of interactive, fully‑functional websites built for diverse industries. Click any project to explore the live demo.
+                        A showcase of interactive, fully‑functional websites built for diverse industries. Click any project to explore the live project.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Filter Buttons -->
         <div class="container">
             <div class="portfolio-filter" id="portfolioFilter">
                 <button class="filter-btn active" data-filter="all">All</button>
@@ -149,11 +174,9 @@
             </div>
         </div>
 
-        <!-- Portfolio Grid -->
         <section class="section" style="padding-top: 0;">
             <div class="container">
                 <div class="portfolio-grid" id="portfolioGrid">
-                    <!-- 1. Savannah Pride Hotel -->
                     <div class="portfolio-item" data-category="hospitality">
                         <div class="portfolio-image">
                             <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Savannah Pride Hotel">
@@ -162,11 +185,9 @@
                             <div class="portfolio-category">Hospitality</div>
                             <h4>Savannah Pride Hotel</h4>
                             <p>A luxury hotel website with room booking, restaurant menus, photo gallery, and contact forms. Elegant, responsive, and conversion‑focused.</p>
-                            <a href="savannah-hotel.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                            <a href="savannah-hotel.html" target="_blank" class="btn-demo">View Live Project →</a>
                         </div>
                     </div>
-
-                    <!-- 2. Amani Retail Shop -->
                     <div class="portfolio-item" data-category="retail">
                         <div class="portfolio-image">
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPwXMKgLGqOBcXoxqSCmVtVAohes47kZEClQ&s" alt="Amani Retail Shop">
@@ -175,11 +196,9 @@
                             <div class="portfolio-category">Retail</div>
                             <h4>Amani Retail Shop</h4>
                             <p>A dense, everyday Kenyan retail store with product categories, cart simulation, and checkout. Compact layout with rich product descriptions.</p>
-                            <a href="amani-retail.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                            <a href="amani-retail.html" target="_blank" class="btn-demo">View Live Project →</a>
                         </div>
                     </div>
-
-                    <!-- 3. FreshMart Supermarket -->
                     <div class="portfolio-item" data-category="retail">
                         <div class="portfolio-image">
                             <img src="https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=600" alt="FreshMart Supermarket">
@@ -188,11 +207,9 @@
                             <div class="portfolio-category">Retail / Grocery</div>
                             <h4>FreshMart Supermarket</h4>
                             <p>Interactive online grocery with aisle filtering, search, working cart, loyalty program, and full checkout simulation.</p>
-                            <a href="freshmart.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                            <a href="freshmart.html" target="_blank" class="btn-demo">View Live Project →</a>
                         </div>
                     </div>
-
-                    <!-- 4. Nyama Choma Ranch -->
                     <div class="portfolio-item" data-category="food">
                         <div class="portfolio-image">
                             <img src="https://images.pexels.com/photos/262918/pexels-photo-262918.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Nyama Choma Ranch">
@@ -201,11 +218,9 @@
                             <div class="portfolio-category">Restaurant</div>
                             <h4>Nyama Choma Ranch</h4>
                             <p>Vibrant Kenyan restaurant with table‑side ordering, menu filters, table reservation, and full digital menu.</p>
-                            <a href="nyamachoma-ranch.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                            <a href="nyamachoma-ranch.html" target="_blank" class="btn-demo">View Live Project →</a>
                         </div>
                     </div>
-
-                    <!-- 5. Miti Masters Carpentry -->
                     <div class="portfolio-item" data-category="craft">
                         <div class="portfolio-image">
                             <img src="https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Miti Masters Carpentry">
@@ -214,11 +229,9 @@
                             <div class="portfolio-category">Craft & Trade</div>
                             <h4>Miti Masters Carpentry</h4>
                             <p>Workshop portfolio with project gallery, custom order builder, wood type guide, and detailed product listings.</p>
-                            <a href="miti-masters.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                            <a href="miti-masters.html" target="_blank" class="btn-demo">View Live Project →</a>
                         </div>
                     </div>
-
-                    <!-- 6. Afya First Hospital -->
                     <div class="portfolio-item" data-category="health">
                         <div class="portfolio-image">
                             <img src="https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Afya First Hospital">
@@ -227,11 +240,9 @@
                             <div class="portfolio-category">Healthcare</div>
                             <h4>Afya First Hospital</h4>
                             <p>A modern hospital site with appointment booking, doctor profiles, service listings, and emergency information.</p>
-                            <a href="afya-first-hospital.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                            <a href="afya-first-hospital.html" target="_blank" class="btn-demo">View Live Project →</a>
                         </div>
                     </div>
-
-                    <!-- 7. ShuleMaster School Management System -->
                     <div class="portfolio-item" data-category="management">
                         <div class="portfolio-image">
                             <img src="https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=600" alt="ShuleMaster School Management System">
@@ -240,14 +251,13 @@
                             <div class="portfolio-category">Management System</div>
                             <h4>ShuleMaster</h4>
                             <p>Complete school management system with role‑based logins, student/teacher administration, fees, attendance, and exam results.</p>
-                            <a href="school-system.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                            <a href="school-system.html" target="_blank" class="btn-demo">View Live Project →</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- CTA -->
         <div style="text-align: center; padding: 40px 0;">
             <p style="margin-bottom: 15px; font-size: 16px; color: var(--text-primary);">Ready to have a project like these?</p>
             <a href="contact.html" class="btn btn-primary btn-large">Start a Conversation →</a>
@@ -258,10 +268,7 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col">
-                    <div class="footer-contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                       <h4>Contacts</h4>
-                    </div>
+                    <h4>Contacts</h4>
                     <div class="footer-contact-item">
                         <i class="fas fa-envelope"></i>
                         <span>velocetechcompany@gmail.com</span>
@@ -304,19 +311,13 @@
 
     <script src="script.js"></script>
     <script>
-        // Portfolio filter functionality
         const filterButtons = document.querySelectorAll('.filter-btn');
         const portfolioItems = document.querySelectorAll('.portfolio-item');
-
         filterButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove active class from all buttons
                 filterButtons.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
                 btn.classList.add('active');
-
                 const filterValue = btn.getAttribute('data-filter');
-
                 portfolioItems.forEach(item => {
                     if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                         item.style.display = 'flex';
