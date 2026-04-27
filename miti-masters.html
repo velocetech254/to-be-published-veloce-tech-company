@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Miti Masters | Custom Carpentry & Furniture – Nairobi, Kenya</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --wood-dark: #4a3828;
+            --wood-mid: #7b5e47;
+            --wood-light: #c9a87c;
+            --cream: #fdf7f0;
+            --text: #3a3028;
+            --border: #d4c5b2;
+            --white: #ffffff;
+            --shadow: 0 6px 25px rgba(0,0,0,0.08);
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Inter', sans-serif; font-size: 13px; line-height: 1.4; color: var(--text); background: var(--cream); }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin:0 auto; padding:0 12px; }
+
+        .header { background: var(--wood-dark); color: white; padding: 8px 0; position: sticky; top:0; z-index:100; }
+        .header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; }
+        .logo span { color: var(--wood-light); }
+        .nav-links { display: flex; gap: 18px; list-style: none; }
+        .nav-links a { color: white; font-weight: 500; font-size: 12px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--wood-light); }
+
+        .hero {
+            background: linear-gradient(135deg, #4a3828 0%, #3a2a1a 100%);
+            padding: 40px 0; text-align: center; color: white;
+        }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 10px; }
+        .hero h1 span { color: var(--wood-light); }
+        .hero p { font-size: 1rem; opacity: 0.9; max-width: 600px; margin:0 auto 15px; }
+        .btn-primary { background: var(--wood-light); color: var(--wood-dark); padding: 8px 24px; border-radius: 4px; font-weight: 600; display: inline-block; transition: 0.3s; font-size: 13px; }
+        .btn-primary:hover { background: #e0bc8c; transform: translateY(-2px); }
+
+        .section-head { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--wood-dark); margin-bottom: 15px; position: relative; display: inline-block; }
+        .section-head::after { content:''; width: 50px; height: 2px; background: var(--wood-light); position: absolute; bottom: -4px; left:0; }
+
+        /* Product grid (dense) */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; margin-bottom: 25px; }
+        .product-card { background: white; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; transition: transform 0.2s; }
+        .product-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+        .product-card img { width:100%; height:130px; object-fit: cover; }
+        .product-info { padding: 10px; }
+        .product-info h4 { font-size: 14px; margin-bottom: 4px; color: var(--wood-dark); }
+        .product-info p { font-size: 11px; color: #666; margin-bottom: 8px; }
+        .price { font-weight: 700; color: #b63e1a; font-size: 14px; }
+        .old-price { text-decoration: line-through; color: #999; font-size: 11px; margin-left: 6px; }
+        .btn-add { display: block; margin-top: 8px; background: var(--wood-mid); color: white; text-align: center; padding: 6px; border-radius: 3px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; }
+
+        /* Why us */
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 25px; }
+        .why-card { background: white; border: 1px solid var(--border); padding: 12px; border-radius: 4px; font-size: 12px; }
+        .why-card i { color: var(--wood-mid); margin-right: 6px; }
+        .why-card h4 { font-size: 13px; margin-bottom: 5px; }
+
+        /* Gallery filter */
+        .gallery-filter { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+        .filter-btn { padding: 5px 15px; border: 1px solid var(--wood-mid); background: transparent; color: var(--wood-mid); border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.3s; font-size: 12px; }
+        .filter-btn.active, .filter-btn:hover { background: var(--wood-mid); color: white; }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; }
+        .gallery-item { border-radius: 4px; overflow: hidden; background: white; border: 1px solid var(--border); cursor: pointer; transition: transform 0.3s; }
+        .gallery-item:hover { transform: translateY(-4px); }
+        .gallery-item img { width:100%; height:160px; object-fit: cover; }
+        .gallery-item .caption { padding: 8px; }
+        .gallery-item .caption h4 { font-size: 13px; margin-bottom: 2px; }
+        .gallery-item .caption p { font-size: 11px; color: #666; }
+
+        /* Order builder (compact) */
+        .order-builder { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 15px; margin: 20px 0; }
+        .builder-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+        .form-group { margin-bottom: 10px; }
+        .form-group label { font-weight: 600; display: block; margin-bottom: 3px; font-size: 12px; }
+        .form-group select, .form-group input { width:100%; padding: 6px; border: 1px solid var(--border); border-radius: 3px; font-family: inherit; font-size: 13px; }
+        .btn-build { background: var(--wood-mid); color: white; border: none; padding: 8px 20px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 12px; }
+        .estimate-box { margin-top: 12px; padding: 8px; background: var(--cream); border-radius: 4px; font-weight: 600; display: none; font-size: 13px; }
+
+        /* Contact */
+        .contact-row { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 15px; }
+        .contact-info { flex:1; min-width: 200px; }
+        .contact-info p { margin-bottom: 6px; font-size: 13px; }
+        .contact-form { flex:1; min-width: 250px; }
+        .contact-form input, .contact-form textarea { width:100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 8px; font-family: inherit; }
+
+        footer { background: var(--wood-dark); color: #ccc; padding: 20px 0; margin-top: 30px; font-size: 12px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr)); gap: 15px; }
+        .footer-grid h4 { color: white; margin-bottom: 6px; }
+
+        @media(max-width:768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">Miti <span>Masters</span></a>
+            <ul class="nav-links">
+                <li><a href="#furniture">Furniture</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#builder">Custom Order</a></li>
+                <li><a href="#why">Why Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Handcrafted <span>Woodworks</span> for Life</h1>
+            <p>Premium Kenyan‑made furniture, built to last generations. Custom designs or ready‑to‑buy pieces – we bring your vision to life.</p>
+            <a href="#furniture" class="btn-primary">Shop Furniture</a>
+        </div>
+    </section>
+
+    <main class="container" style="padding:30px 0;">
+        <!-- Furniture for sale (products) -->
+        <section id="furniture" style="margin-bottom:30px;">
+            <h2 class="section-head">Ready‑to‑Buy Furniture</h2>
+            <div class="product-grid">
+                <!-- Living Room -->
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Elgon Teak Coffee Table">
+                    <div class="product-info">
+                        <h4>Elgon Teak Coffee Table</h4>
+                        <p>120×60×45 cm. Natural oil finish.</p>
+                        <span class="price">KSh 22,500</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Meru Oak TV Stand">
+                    <div class="product-info">
+                        <h4>Meru Oak TV Stand</h4>
+                        <p>160×40×50 cm. Stained dark.</p>
+                        <span class="price">KSh 18,000</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/1248582/pexels-photo-1248582.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Mugavu Bookshelf">
+                    <div class="product-info">
+                        <h4>Mugavu Bookshelf (6‑tier)</h4>
+                        <p>80×30×200 cm. Exotic grain.</p>
+                        <span class="price">KSh 35,000</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <!-- Bedroom -->
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/1854664/pexels-photo-1854664.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Cypress Wardrobe">
+                    <div class="product-info">
+                        <h4>Cypress Wardrobe (3‑door)</h4>
+                        <p>150×60×210 cm. Painted white.</p>
+                        <span class="price">KSh 28,500</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/262048/pexels-photo-262048.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Meru Oak Bed Frame">
+                    <div class="product-info">
+                        <h4>Meru Oak Bed Frame (Queen)</h4>
+                        <p>Queen size, slatted base.</p>
+                        <span class="price">KSh 32,000</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Bedside Table">
+                    <div class="product-info">
+                        <h4>Bedside Table (Elgon Teak)</h4>
+                        <p>45×40×50 cm. Two drawers.</p>
+                        <span class="price">KSh 9,800</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <!-- Office -->
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/37347/office-sitting-room-executive-sitting.jpg?auto=compress&cs=tinysrgb&w=300" alt="Executive Desk Mugavu">
+                    <div class="product-info">
+                        <h4>Executive Desk (Mugavu)</h4>
+                        <p>160×80×75 cm. Leather inlay.</p>
+                        <span class="price">KSh 45,000</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/159839/office-home-house-desk-159839.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Office Bookshelf">
+                    <div class="product-info">
+                        <h4>Office Bookshelf (Meru Oak)</h4>
+                        <p>100×35×180 cm. Adjustable shelves.</p>
+                        <span class="price">KSh 26,000</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="https://images.pexels.com/photos/276551/pexels-photo-276551.jpeg?auto=compress&cs=tinysrgb&w=300" alt="Boardroom Table">
+                    <div class="product-info">
+                        <h4>Boardroom Table (Elgon Teak)</h4>
+                        <p>300×120×75 cm. Seats 8.</p>
+                        <span class="price">KSh 68,000</span>
+                        <button class="btn-add" onclick="alert('Added to inquiry (demo)')">Add to Inquiry</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section id="gallery" style="margin-bottom:30px;">
+            <h2 class="section-head">Project Gallery</h2>
+            <div class="gallery-filter" id="galleryFilter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="living">Living Room</button>
+                <button class="filter-btn" data-filter="bedroom">Bedroom</button>
+                <button class="filter-btn" data-filter="kitchen">Kitchen</button>
+                <button class="filter-btn" data-filter="office">Office</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
+
+        <!-- Custom Order Builder -->
+        <section id="builder" style="margin-bottom:30px;">
+            <h2 class="section-head">Custom Order Builder</h2>
+            <p style="margin-bottom:10px; font-size:13px;">Get an instant estimate for your bespoke piece. We'll contact you to finalize details.</p>
+            <div class="order-builder">
+                <div class="builder-grid">
+                    <div class="form-group">
+                        <label>Furniture Type</label>
+                        <select id="furnitureType">
+                            <option value="coffee-table">Coffee Table</option>
+                            <option value="dining-table">Dining Table</option>
+                            <option value="wardrobe">Wardrobe</option>
+                            <option value="bed">Bed Frame</option>
+                            <option value="bookshelf">Bookshelf</option>
+                            <option value="kitchen-cabinet">Kitchen Cabinet</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Wood Type</label>
+                        <select id="woodType">
+                            <option value="elgon-teak">Elgon Teak (Premium)</option>
+                            <option value="meru-oak">Meru Oak (Standard)</option>
+                            <option value="mugavu">Mugavu (Exotic)</option>
+                            <option value="cypress">Cypress (Budget)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Width (cm)</label>
+                        <input type="number" id="widthCm" placeholder="e.g. 120" min="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Depth (cm)</label>
+                        <input type="number" id="depthCm" placeholder="e.g. 60" min="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Height (cm)</label>
+                        <input type="number" id="heightCm" placeholder="e.g. 45" min="10" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Finish</label>
+                        <select id="finish">
+                            <option value="natural">Natural Oil</option>
+                            <option value="stained">Stained Dark</option>
+                            <option value="painted">Painted White</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn-build" onclick="calculateEstimate()">Calculate Estimate</button>
+                <div class="estimate-box" id="estimateBox">
+                    Estimated Cost: <span id="estimateValue">KSh 0</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us -->
+        <section id="why" style="margin-bottom:30px;">
+            <h2 class="section-head">Why Choose Miti Masters?</h2>
+            <div class="why-grid">
+                <div class="why-card">
+                    <i class="fas fa-tree"></i>
+                    <h4>Locally Sourced Kenyan Timber</h4>
+                    <p>We use only sustainably harvested wood from certified Kenyan forests – Elgon Teak, Meru Oak, Mugavu, and Cypress. No imported particle board, no cheap veneers. Our furniture is solid wood, through and through.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-tools"></i>
+                    <h4>Master Craftsmanship</h4>
+                    <p>Our artisans have an average of 15 years of experience. Every joint is mortise‑and‑tenon, every surface hand‑sanded, every finish applied by hand. The result is furniture that lasts decades, not years.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-tag"></i>
+                    <h4>Direct Workshop Prices</h4>
+                    <p>By selling directly from our workshop in Industrial Area, Nairobi, we cut out middlemen and retail markups. You get premium quality at prices comparable to mass‑produced factory furniture.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h4>5‑Year Structural Warranty</h4>
+                    <p>We stand behind our work. Every piece comes with a 5‑year warranty against structural defects. If something goes wrong, we repair or replace it – no questions asked.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-pencil-ruler"></i>
+                    <h4>Fully Customisable</h4>
+                    <p>Unlike imported furniture that comes in fixed sizes and finishes, we can build to your exact specifications. Adjust dimensions, wood type, stain colour, hardware – we tailor everything to your home.</p>
+                </div>
+                <div class="why-card">
+                    <i class="fas fa-truck"></i>
+                    <h4>Free Nairobi Delivery & Installation</h4>
+                    <p>We deliver and assemble your furniture in any location within Nairobi free of charge. Our team will place the piece exactly where you want it and remove all packaging.</p>
+                </div>
+            </div>
+            <p style="font-size:12px; margin-top:15px; color:#555;"><strong>Compare us to imported furniture:</strong> Most furniture sold in Kenyan stores is made from compressed particle board that swells in humidity and breaks within 2‑3 years. Our solid wood pieces are built to withstand Nairobi's climate and last for generations. Plus, you support local jobs and sustainable forestry.</p>
+        </section>
+
+        <!-- Contact -->
+        <section id="contact" style="margin-bottom:30px;">
+            <h2 class="section-head">Contact & Visit Us</h2>
+            <div class="contact-row">
+                <div class="contact-info">
+                    <p><i class="fas fa-map-marker-alt"></i> <strong>Workshop:</strong> Off Enterprise Road, Industrial Area, Nairobi</p>
+                    <p><i class="fas fa-clock"></i> <strong>Hours:</strong> Mon‑Sat 8:00am – 5:00pm</p>
+                    <p><i class="fas fa-phone"></i> <strong>Phone:</strong> +254 722 987 654</p>
+                    <p><i class="fas fa-envelope"></i> <strong>Email:</strong> info@mitimasters.co.ke</p>
+                    <p><i class="fab fa-whatsapp"></i> <strong>WhatsApp:</strong> +254 722 987 654</p>
+                </div>
+                <div class="contact-form">
+                    <form onsubmit="event.preventDefault(); alert('Message sent! We will contact you shortly. (Demo)');">
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Email Address" required>
+                        <input type="tel" placeholder="Phone Number">
+                        <textarea placeholder="Tell us about your project..." rows="3"></textarea>
+                        <button type="submit" class="btn-primary">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <h4>Miti Masters</h4>
+                <p>Custom Carpentry & Furniture since 2010. Solid wood. Handcrafted. Kenyan.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <ul style="list-style:none;">
+                    <li><a href="#furniture">Shop Furniture</a></li>
+                    <li><a href="#builder">Custom Order</a></li>
+                    <li><a href="#why">Why Us</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:15px; border-top:1px solid #555; padding-top:10px;">
+            © 2026 Miti Masters Carpentry · Nairobi, Kenya · Sample website by Veloce Tech Company.
+        </div>
+    </footer>
+
+    <script>
+        const projects = [
+            { title:"Coffee Table", desc:"Elgon Teak, natural oil.", cat:"living", img:"https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { title:"TV Stand", desc:"Meru Oak, stained dark.", cat:"living", img:"https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { title:"Bookshelf", desc:"Mugavu, 6‑tier.", cat:"living", img:"https://images.pexels.com/photos/1248582/pexels-photo-1248582.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { title:"Wardrobe", desc:"Cypress, painted white.", cat:"bedroom", img:"https://images.pexels.com/photos/1854664/pexels-photo-1854664.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { title:"Bed Frame", desc:"Meru Oak, queen size.", cat:"bedroom", img:"https://images.pexels.com/photos/262048/pexels-photo-262048.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { title:"Kitchen Cabinet", desc:"Elgon Teak, fitted.", cat:"kitchen", img:"https://images.pexels.com/photos/534151/pexels-photo-534151.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { title:"Executive Desk", desc:"Mugavu, leather inlay.", cat:"office", img:"https://images.pexels.com/photos/37347/office-sitting-room-executive-sitting.jpg?auto=compress&cs=tinysrgb&w=300" }
+        ];
+
+        const galleryGrid = document.getElementById('galleryGrid');
+        function renderGallery(filter = 'all') {
+            const filtered = filter === 'all' ? projects : projects.filter(p => p.cat === filter);
+            galleryGrid.innerHTML = filtered.map(p => `
+                <div class="gallery-item">
+                    <img src="${p.img}" alt="${p.title}">
+                    <div class="caption"><h4>${p.title}</h4><p>${p.desc}</p></div>
+                </div>
+            `).join('');
+        }
+        renderGallery();
+
+        document.getElementById('galleryFilter').addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                renderGallery(e.target.dataset.filter);
+            }
+        });
+
+        function calculateEstimate() {
+            const wood = document.getElementById('woodType').value;
+            const w = parseFloat(document.getElementById('widthCm').value) || 0;
+            const d = parseFloat(document.getElementById('depthCm').value) || 0;
+            const h = parseFloat(document.getElementById('heightCm').value) || 0;
+            const finish = document.getElementById('finish').value;
+
+            const woodMultiplier = {
+                'elgon-teak': 1.8,
+                'meru-oak': 1.3,
+                'mugavu': 2.2,
+                'cypress': 0.9
+            };
+            const finishMultiplier = {
+                'natural': 1.0,
+                'stained': 1.15,
+                'painted': 1.1
+            };
+
+            const volume = w * d * h;
+            const base = volume * 0.08;
+            const estimate = Math.round(base * woodMultiplier[wood] * finishMultiplier[finish]);
+
+            document.getElementById('estimateValue').textContent = `KSh ${estimate.toLocaleString()}`;
+            document.getElementById('estimateBox').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

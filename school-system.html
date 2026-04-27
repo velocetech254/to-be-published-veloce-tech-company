@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ShuleMaster · A‑Class School System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e40af;
+            --primary-light: #3b82f6;
+            --dark: #1e293b;
+            --border: #cbd5e1;
+            --text: #334155;
+            --white: #fff;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text);
+            background: #f1f5f9;
+        }
+        .app-container { display: flex; flex-direction: column; height: 100vh; }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+        }
+        .top-bar h2 { font-family: 'Outfit', sans-serif; font-size: 20px; display: flex; align-items: center; gap: 10px; }
+        .refresh-btn { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--primary); }
+        .user-info { display: flex; align-items: center; gap: 10px; position: relative; }
+        .notification-bell { position: relative; cursor: pointer; font-size: 18px; margin-right: 5px; }
+        .bell-badge { position: absolute; top: -8px; right: -8px; background: #ef4444; color: white; border-radius: 50%; width: 16px; height: 16px; font-size: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .notification-dropdown { position: absolute; top: 40px; right: 0; width: 300px; background: white; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); z-index: 1000; display: none; max-height: 400px; overflow-y: auto; border: 1px solid var(--border); }
+        .notification-dropdown.active { display: block; }
+        .notification-item { padding: 12px; border-bottom: 1px solid #e2e8f0; cursor: pointer; }
+        .notification-item:hover { background: #f8fafc; }
+        .notification-item.unread { background: #eef2ff; }
+        .mark-all-read { text-align: center; padding: 8px; font-size: 11px; background: #f1f5f9; cursor: pointer; }
+        .btn {
+            background: var(--primary-light);
+            color: white;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-outline {
+            background: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        .btn-sm { padding: 4px 10px; font-size: 11px; }
+        .tab-nav {
+            display: flex;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+        .tab-nav a {
+            padding: 10px 16px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #475569;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .tab-nav a:hover, .tab-nav a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+        }
+        .tab-content { flex: 1; overflow-y: auto; padding: 20px; }
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+        th, td { padding: 12px 8px; border-bottom: 1px solid var(--border); text-align: left; }
+        th { background: #f8fafc; font-weight: 600; }
+        .badge { background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 20px; font-size: 11px; }
+        .badge.red { background: #fee2e2; color: #991b1b; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .detail-item { background: #f8fafc; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .detail-item label { color: #64748b; text-transform: uppercase; font-size: 10px; display: block; margin-bottom: 5px; }
+        .progress-bar { height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+        .progress-fill { height: 100%; background: #22c55e; width: 0%; border-radius: 5px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .login-container {
+            background: linear-gradient(135deg, #1e40af 0%, #1e293b 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .login-card h2 {
+            font-family: 'Outfit';
+            font-size: 28px;
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        .login-card p.sub {
+            text-align: center;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-weight: 600; font-size: 12px; margin-bottom: 6px; color: #475569; }
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+        .input-group input:focus {
+            border-color: var(--primary-light);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+        .login-error { color: #dc2626; font-size: 12px; text-align: center; margin-top: 15px; }
+        .teacher-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 20px; margin-top: 20px; }
+        .teacher-card { background: white; border: 1px solid var(--border); border-radius: 16px; padding: 20px; text-align: center; transition: 0.2s; }
+        .teacher-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        .teacher-avatar { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 15px; border: 3px solid #f1f5f9; }
+        .points-badge { background: #fef3c7; color: #92400e; padding: 3px 10px; border-radius: 30px; font-weight: bold; font-size: 12px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN SECTION -->
+<div id="loginSection" class="login-container">
+    <div class="login-card">
+        <h2>🏫 ShuleMaster</h2>
+        <p class="sub">School Management System</p>
+        <div class="input-group">
+            <label>👤 ID / Admission Number</label>
+            <input type="text" id="loginId" placeholder="e.g. ADM001">
+        </div>
+        <div class="input-group">
+            <label>🔒 Password</label>
+            <input type="password" id="loginPass" placeholder="••••••••">
+        </div>
+        <button class="btn" style="width:100%; padding: 12px; font-size:14px;" onclick="handleLogin()">Sign In →</button>
+        <p id="loginError" class="login-error"></p>
+    </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app-container" id="appContainer" style="display: none;">
+    <div class="top-bar">
+        <h2 id="pageTitle">Dashboard <button class="refresh-btn" onclick="refreshCurrentTab()" title="Refresh data"><i class="fas fa-sync-alt"></i></button></h2>
+        <div class="user-info">
+            <div class="notification-bell" id="notificationBell" onclick="toggleNotificationDropdown()">
+                <i class="fas fa-bell"></i>
+                <span id="bellBadge" class="bell-badge" style="display: none;">0</span>
+            </div>
+            <span id="loggedUserRole"></span>
+            <i class="fas fa-user-circle fa-lg"></i>
+            <button class="btn btn-outline" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    <div class="tab-nav" id="tabNav"></div>
+    <div class="tab-content" id="tabContent"></div>
+</div>
+
+<!-- Notification Dropdown -->
+<div id="notificationDropdown" class="notification-dropdown">
+    <div id="notificationList"></div>
+    <div class="mark-all-read" onclick="markAllNotificationsRead()">Mark all as read</div>
+</div>
+
+<script>
+    // ======================== GLOBAL STATE WITH LOCALSTORAGE ========================
+    let students = [];
+    let teachers = [];
+    let nonStaff = [];
+    let inventory = [];
+    let assignments = [];
+    let schoolExpenses = [];
+    let newsletters = [];
+    let examResults = [];
+    let documents = [];
+    let libraryLoans = [];
+    let disciplinePoints = [];
+    let gatePasses = [];
+
+    function loadData() {
+        const stored = localStorage.getItem('shuleMasterData');
+        if (stored) {
+            const data = JSON.parse(stored);
+            students = data.students || [];
+            teachers = data.teachers || [];
+            nonStaff = data.nonStaff || [];
+            inventory = data.inventory || [];
+            assignments = data.assignments || [];
+            schoolExpenses = data.schoolExpenses || [];
+            newsletters = data.newsletters || [];
+            examResults = data.examResults || [];
+            documents = data.documents || [];
+            libraryLoans = data.libraryLoans || [];
+            disciplinePoints = data.disciplinePoints || [];
+            gatePasses = data.gatePasses || [];
+        } else {
+            // Seed data
+            students = [
+                { adm:'ADM001', name:'Grace Wanjiku', class:'Form 3', parentPhone:'0711223344', feesTotal:45000, feesPaid:32000, results:[], attendance:{}, password:'123', status:'Active', photo:'' },
+                { adm:'ADM002', name:'Brian Otieno', class:'Form 4', parentPhone:'0722334455', feesTotal:45000, feesPaid:45000, results:[], attendance:{}, password:'123', status:'Active', photo:'' },
+                { adm:'ADM003', name:'Amina Juma', class:'Form 1', parentPhone:'0733445566', feesTotal:45000, feesPaid:5000, results:[], attendance:{}, password:'123', status:'Active', photo:'' },
+                { adm:'ADM004', name:'Juma Mwangi', class:'Form 2', parentPhone:'0744556677', feesTotal:45000, feesPaid:45000, results:[], attendance:{}, password:'123', status:'Active', photo:'' },
+                { adm:'ADM005', name:'Faith Muthoni', class:'Form 3', parentPhone:'0755667788', feesTotal:45000, feesPaid:0, results:[], attendance:{}, password:'123', status:'Active', photo:'' }
+            ];
+            teachers = [
+                { id:'T01', name:'Mr. James Kamau', subject:'Mathematics', phone:'0722123456', email:'kamau@school.ac.ke', photo:'' },
+                { id:'T02', name:'Mrs. Emily Atieno', subject:'English', phone:'0722765432', email:'atieno@school.ac.ke', photo:'' },
+                { id:'T03', name:'Mr. Paul Mboya', subject:'Physics', phone:'0711456789', email:'mboya@school.ac.ke', photo:'' }
+            ];
+            nonStaff = [
+                { id:'NS01', name:'Joseph Mwende', role:'Cook', phone:'0700111222' },
+                { id:'NS02', name:'Alice Wambui', role:'Cleaner', phone:'0711222333' }
+            ];
+            inventory = [
+                { item: 'Physics Textbooks', quantity: 45, status: 'Good' },
+                { item: 'Lab Microscopes', quantity: 12, status: 'Repair Needed' },
+                { item: 'Desks (Class 3)', quantity: 30, status: 'Good' }
+            ];
+            assignments = [
+                { id: 1, subject: 'Mathematics', title: 'Calculus Intro', dueDate: '2026-05-10', class: 'Form 3' }
+            ];
+            schoolExpenses = [
+                { date: '2026-04-01', desc: 'Electricity Bill', amount: 5000, category: 'Utilities' },
+                { date: '2026-04-05', desc: 'Stationery Purchase', amount: 12000, category: 'Academic' }
+            ];
+        }
+    }
+    function saveData() {
+        const data = {
+            students, teachers, nonStaff, inventory, assignments, schoolExpenses,
+            newsletters, examResults, documents, libraryLoans, disciplinePoints, gatePasses
+        };
+        localStorage.setItem('shuleMasterData', JSON.stringify(data));
+    }
+    loadData();
+
+    let currentRole = null, currentUser = null;
+
+    // ======================== NOTIFICATION SYSTEM ========================
+    function updateNotificationBell() {
+        const readCount = parseInt(sessionStorage.getItem('shuleReadNewsCount') || '0');
+        const unreadCount = newsletters.length - readCount;
+        const badge = document.getElementById('bellBadge');
+        if (badge) {
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = 'flex';
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+        renderNotificationDropdown();
+    }
+    function renderNotificationDropdown() {
+        const container = document.getElementById('notificationList');
+        if (!container) return;
+        const readCount = parseInt(sessionStorage.getItem('shuleReadNewsCount') || '0');
+        container.innerHTML = newsletters.map((n, idx) => {
+            const isUnread = idx >= readCount;
+            return `<div class="notification-item ${isUnread ? 'unread' : ''}" onclick="markNotificationRead(${idx})">
+                        <div class="notification-title"><b>${escapeHtml(n.title)}</b></div>
+                        <div class="notification-date">${n.date} · by ${n.sender}</div>
+                        <div style="font-size:12px;">${escapeHtml(n.content)}</div>
+                    </div>`;
+        }).join('');
+        if (newsletters.length === 0) container.innerHTML = '<div class="notification-item">No announcements</div>';
+    }
+    function markNotificationRead(index) {
+        let readCount = parseInt(sessionStorage.getItem('shuleReadNewsCount') || '0');
+        if (index >= readCount) {
+            readCount = index + 1;
+            sessionStorage.setItem('shuleReadNewsCount', readCount);
+            updateNotificationBell();
+        }
+    }
+    function markAllNotificationsRead() {
+        sessionStorage.setItem('shuleReadNewsCount', newsletters.length);
+        updateNotificationBell();
+    }
+    function toggleNotificationDropdown() {
+        const dropdown = document.getElementById('notificationDropdown');
+        dropdown.classList.toggle('active');
+        if (dropdown.classList.contains('active')) {
+            document.addEventListener('click', function closeDropdown(e) {
+                if (!dropdown.contains(e.target) && !document.getElementById('notificationBell').contains(e.target)) {
+                    dropdown.classList.remove('active');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            });
+        }
+    }
+    function escapeHtml(str) { return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+    function refreshCurrentTab() {
+        const activeTab = document.querySelector('#tabNav a.active')?.getAttribute('data-tab');
+        if (activeTab) switchTab(activeTab);
+        else switchTab('dashboard');
+    }
+
+    // ======================== LOGIN & SESSION ========================
+    window.addEventListener('DOMContentLoaded', () => {
+        const userData = JSON.parse(sessionStorage.getItem('shuleUser'));
+        const role = sessionStorage.getItem('shuleRole');
+        if (userData && role) {
+            showDashboard(userData, role);
+        } else {
+            document.getElementById('loginSection').style.display = 'flex';
+            document.getElementById('appContainer').style.display = 'none';
+        }
+        updateNotificationBell();
+    });
+
+    function handleLogin() {
+        const id = document.getElementById('loginId').value.trim();
+        const pass = document.getElementById('loginPass').value.trim();
+        const error = document.getElementById('loginError');
+        let user = null, role = null;
+
+        let student = students.find(s => s.adm === id && s.password === pass);
+        if (student) { user = student; role = 'student'; }
+        if (!user) {
+            let teacher = teachers.find(t => t.id === id);
+            if (teacher) { user = teacher; role = 'teacher'; }
+        }
+        if (!user && id === 'admin' && pass === 'admin') { user = { name: 'School Admin', role: 'Principal' }; role = 'principal'; }
+        if (!user && id === 'bursar' && pass === 'bursar') { user = { name: 'Bursar', role: 'Bursar' }; role = 'bursar'; }
+
+        if (user) {
+            sessionStorage.setItem('shuleUser', JSON.stringify(user));
+            sessionStorage.setItem('shuleRole', role);
+            showDashboard(user, role);
+        } else {
+            error.textContent = "Invalid. Try ADM001/123, T01/any, admin/admin, bursar/bursar";
+        }
+    }
+
+    function showDashboard(userData, role) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('appContainer').style.display = 'flex';
+        currentRole = role;
+        if (role === 'student') {
+            currentUser = students.find(s => s.adm === userData.adm);
+            if (currentUser) currentUser.role = 'Student';
+        } else if (role === 'teacher') {
+            currentUser = teachers.find(t => t.id === userData.id);
+            if (currentUser) currentUser.role = 'Teacher';
+        } else {
+            currentUser = { name: userData.name, role: userData.role };
+        }
+        document.getElementById('loggedUserRole').innerHTML = `${currentUser.name} (${currentUser.role})`;
+        buildTabs();
+        switchTab('dashboard');
+    }
+
+    function logout() { sessionStorage.clear(); location.reload(); }
+
+    // ======================== TAB SYSTEM ========================
+    function buildTabs() {
+        const tabNav = document.getElementById('tabNav');
+        let tabs = [];
+        if (currentRole === 'principal') {
+            // Removed fees, attendance, results for principal
+            tabs = [
+                { id:'dashboard', label:'Dashboard' }, { id:'students', label:'Students' }, { id:'teachers', label:'Teachers' },
+                { id:'staff', label:'Staff' }, { id:'inventory', label:'Inventory' }, { id:'finance', label:'Finance' },
+                { id:'library', label:'Library' }, { id:'newsletter', label:'Newsletter' }
+            ];
+        } else if (currentRole === 'teacher') {
+            tabs = [
+                { id:'dashboard', label:'Dashboard' }, { id:'attendance', label:'Attendance' }, { id:'results', label:'Results' },
+                { id:'assignments', label:'Assignments' }, { id:'discipline', label:'Discipline Points' }, { id:'gatepass', label:'Gate Pass' }
+            ];
+        } else if (currentRole === 'bursar') {
+            tabs = [ { id:'dashboard', label:'Dashboard' }, { id:'fees', label:'Fees Management' }, { id:'finance', label:'Expenses' } ];
+        } else if (currentRole === 'student') {
+            tabs = [
+                { id:'dashboard', label:'Dashboard' }, { id:'attendance', label:'Attendance' }, { id:'results', label:'Results' },
+                { id:'assignments', label:'Assignments' }, { id:'discipline', label:'My Points' }, { id:'gatepass', label:'Gate Pass' }
+            ];
+        }
+        tabNav.innerHTML = tabs.map(t => `<a href="#" data-tab="${t.id}" onclick="return switchTab('${t.id}')"><i class="fas fa-${getTabIcon(t.id)}"></i> ${t.label}</a>`).join('');
+    }
+
+    function getTabIcon(tabId) {
+        const icons = { dashboard:'tachometer-alt', students:'user-graduate', teachers:'chalkboard-teacher', staff:'users', inventory:'boxes', finance:'chart-line', fees:'money-bill-wave', attendance:'clipboard-check', results:'chart-bar', newsletter:'bullhorn', assignments:'tasks', discipline:'gavel', gatepass:'passport', library:'book' };
+        return icons[tabId] || 'circle';
+    }
+
+    function switchTab(tabId) {
+        document.querySelectorAll('#tabNav a').forEach(a => a.classList.remove('active'));
+        let activeLink = document.querySelector(`#tabNav a[data-tab="${tabId}"]`);
+        if (activeLink) activeLink.classList.add('active');
+        document.getElementById('pageTitle').innerText = tabId.charAt(0).toUpperCase() + tabId.slice(1).replace('-',' ');
+        renderTabContent(tabId);
+        return false;
+    }
+
+    function renderTabContent(tabId) {
+        const container = document.getElementById('tabContent');
+        let html = '';
+        switch(tabId) {
+            case 'dashboard': html = renderDashboard(); break;
+            case 'students': html = renderStudents(); break;
+            case 'teachers': html = renderTeachers(); break;
+            case 'staff': html = renderStaff(); break;
+            case 'inventory': html = renderInventory(); break;
+            case 'finance': html = renderFinanceLedger(); break;
+            case 'library': html = renderLibrary(); break;
+            case 'fees': html = renderFees(); break;
+            case 'attendance': html = renderAttendance(); break;
+            case 'results': html = renderResults(); break;
+            case 'newsletter': html = renderNewsletter(); break;
+            case 'assignments': html = renderAssignments(); break;
+            case 'discipline': html = (currentRole === 'teacher') ? renderTeacherDiscipline() : renderStudentDiscipline(); break;
+            case 'gatepass': html = (currentRole === 'teacher') ? renderTeacherGatePass() : renderStudentGatePass(); break;
+        }
+        container.innerHTML = html;
+        if (tabId === 'students' && currentRole === 'principal') attachStudentEvents();
+        if (tabId === 'attendance' && currentRole === 'teacher') initAttendanceMark();
+        if (tabId === 'results' && currentRole === 'teacher') initResultsEntry();
+    }
+
+    // ======================== DASHBOARD ========================
+    function renderDashboard() {
+        let main = '';
+        if (currentRole === 'principal') {
+            let totalCollected = students.reduce((s,st) => s+st.feesPaid,0);
+            let totalOutstanding = students.reduce((s,st) => s+(st.feesTotal-st.feesPaid),0);
+            main = `<div class="stats-grid"><div class="card"><h4>💰 Revenue</h4><p>KSh ${totalCollected.toLocaleString()}</p></div>
+            <div class="card"><h4>⚠️ Outstanding</h4><p>KSh ${totalOutstanding.toLocaleString()}</p></div>
+            <div class="card"><h4>👩‍🏫 Teachers</h4><p>${teachers.length}</p></div></div>`;
+        } else if (currentRole === 'teacher') {
+            main = `<div class="card"><h3>📊 Your Classes</h3><p>Form 3 Mathematics, English, Physics</p><p>Quick links below</p></div>`;
+        } else if (currentRole === 'student') {
+            const me = students.find(s=>s.adm===currentUser.adm);
+            const paidPercent = (me.feesPaid / me.feesTotal) * 100;
+            main = `<div class="card" style="background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;"><h2>Welcome, ${me.name}</h2><p>Class ${me.class}</p></div>
+            <div class="card"><h3>💰 Fees</h3><div class="progress-bar"><div class="progress-fill" style="width:${paidPercent}%"></div></div><p>Paid KSh ${me.feesPaid.toLocaleString()} of ${me.feesTotal.toLocaleString()}</p></div>`;
+        } else if (currentRole === 'bursar') {
+            main = `<div class="card"><p>Welcome Bursar. Use the tabs to manage fees and expenses.</p></div>`;
+        }
+        const newsHtml = `<div class="card"><h3><i class="fas fa-bullhorn"></i> Announcements</h3>${newsletters.map(n=>`<div style="border-bottom:1px solid #eee; padding:8px 0;"><small>${n.date} · ${n.sender}</small><h4>${n.title}</h4><p>${n.content}</p></div>`).join('')||'<p>No announcements</p>'}</div>`;
+        return main + newsHtml;
+    }
+
+    // ======================== STUDENTS (Principal) with ACADEMIC FILE VIEW ========================
+    function renderStudents() {
+        let html = `<div class="card"><div style="display:flex; justify-content:space-between;"><h3>Student Academic Registry</h3><input type="text" id="searchStudent" placeholder="Search by name or ADM..." onkeyup="searchStudents()" style="padding:8px; width:250px; border-radius:8px; border:1px solid var(--border);"></div>
+        <table id="studentTable"><thead><tr><th>Student</th><th>Adm</th><th>Class</th><th>Attendance</th><th>Last Mean</th><th>Action</th></tr></thead><tbody>`;
+        students.forEach(s => {
+            const attValues = Object.values(s.attendance || {});
+            const attPercent = attValues.length > 0 ? Math.round((attValues.filter(v => v === 'P').length / attValues.length) * 100) : 0;
+            const latestResult = s.results && s.results.length > 0 ? s.results[s.results.length-1].grade : 'N/A';
+            const thumb = s.photo || 'https://via.placeholder.com/40?text=👤';
+            html += `<tr>
+                <td style="display:flex; align-items:center; gap:10px;"><img src="${thumb}" style="width:35px;height:35px;border-radius:50%;"><b>${s.name}</b></td>
+                <td><span class="badge" style="background:#f1f5f9;">${s.adm}</span></td>
+                <td>${s.class}</td>
+                <td><div style="display:flex; align-items:center; gap:5px;"><div style="width:50px; height:6px; background:#e2e8f0; border-radius:3px;"><div style="width:${attPercent}%; height:100%; background:${attPercent<70?'#ef4444':'#22c55e'}; border-radius:3px;"></div></div><span>${attPercent}%</span></div></td>
+                <td><b style="color:var(--primary)">${latestResult}</b></td>
+                <td><button class="btn btn-sm" onclick="viewFullStudentFile('${s.adm}')" style="background:#6366f1"><i class="fas fa-folder-open"></i> View File</button> <button class="btn btn-outline btn-sm" onclick="openEditStudent('${s.adm}')">Edit</button></td>
+            </tr>`;
+        });
+        html += `</tbody></table></div><button class="btn" onclick="openAddStudentModal()">+ Enroll Student</button>
+        <div class="modal" id="addStudentModal"><div class="modal-content"><h3>New Student</h3><input id="newStuName" placeholder="Name"><input id="newStuPhone" placeholder="Parent Phone"><select id="newStuClass"><option>Form 1</option><option>Form 2</option><option>Form 3</option><option>Form 4</option></select><input type="file" id="newStuPhoto" accept="image/*"><br><br><button class="btn" onclick="addStudent()">Enroll</button><button class="btn btn-outline" onclick="closeModal('addStudentModal')">Cancel</button></div></div>`;
+        return html;
+    }
+    window.searchStudents = () => {
+        const q = document.getElementById('searchStudent')?.value.toLowerCase();
+        const rows = document.querySelectorAll('#studentTable tbody tr');
+        rows.forEach(r => { r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none'; });
+    };
+    window.openAddStudentModal = () => document.getElementById('addStudentModal').classList.add('active');
+    window.addStudent = function() {
+        const name = document.getElementById('newStuName').value.trim();
+        const cls = document.getElementById('newStuClass').value;
+        const phone = document.getElementById('newStuPhone').value.trim();
+        if (!name) return;
+        const adm = 'ADM' + String(students.length+1).padStart(3,'0');
+        const tempPass = Math.random().toString(36).slice(-6);
+        const savePhoto = (photo) => {
+            students.push({ adm, name, class:cls, parentPhone:phone, photo, feesTotal:45000, feesPaid:0, attendance:{}, results:[], password:tempPass, status:'Active' });
+            saveData();
+            closeModal('addStudentModal');
+            switchTab('students');
+            alert(`✅ Enrolled! ID: ${adm}  Password: ${tempPass}`);
+        };
+        const file = document.getElementById('newStuPhoto').files[0];
+        if(file) { const reader = new FileReader(); reader.onload = e => savePhoto(e.target.result); reader.readAsDataURL(file); }
+        else savePhoto('');
+    };
+    window.openEditStudent = (adm) => {
+        const s = students.find(x=>x.adm===adm);
+        const photoUrl = s.photo || 'https://via.placeholder.com/150';
+        const modalHtml = `<div class="modal active" id="editStudentModal"><div class="modal-content"><div style="display:flex; justify-content:space-between;"><h2>Edit ${s.name}</h2><button class="btn btn-outline" onclick="closeModal('editStudentModal')">✕</button></div>
+        <div style="display:flex; gap:15px;"><img src="${photoUrl}" id="editPreview" style="width:80px;height:80px;border-radius:12px;"><input type="file" id="photoUpload" onchange="previewImage(event)"><button class="btn btn-outline btn-sm" onclick="document.getElementById('photoUpload').click()">Change Photo</button></div>
+        <div class="detail-grid"><div><label>Name</label><input id="editName" value="${s.name.replace(/"/g,'&quot;')}"></div><div><label>Class</label><select id="editClass">${['Form 1','Form 2','Form 3','Form 4'].map(c=>`<option ${s.class===c?'selected':''}>${c}</option>`).join('')}</select></div><div><label>Parent Phone</label><input id="editPhone" value="${s.parentPhone}"></div><div><label>Fees Paid</label><input id="editFeesPaid" type="number" value="${s.feesPaid}"></div></div>
+        <div style="text-align:right; margin-top:20px;"><button class="btn btn-outline" onclick="closeModal('editStudentModal')">Cancel</button><button class="btn" onclick="saveStudentChanges('${s.adm}')">Save</button></div></div></div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    };
+    window.previewImage = (event) => { const reader = new FileReader(); reader.onload = e => { const preview = document.getElementById('editPreview'); if(preview) preview.src = e.target.result; }; if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); };
+    window.saveStudentChanges = (adm) => {
+        const s = students.find(x=>x.adm===adm);
+        if(s) {
+            s.name = document.getElementById('editName')?.value || s.name;
+            s.class = document.getElementById('editClass')?.value || s.class;
+            s.parentPhone = document.getElementById('editPhone')?.value || s.parentPhone;
+            let newPaid = parseInt(document.getElementById('editFeesPaid')?.value);
+            if(!isNaN(newPaid)) s.feesPaid = newPaid;
+            const newPhoto = document.getElementById('editPreview')?.src;
+            if(newPhoto && !newPhoto.includes('placeholder')) s.photo = newPhoto;
+            saveData();
+        }
+        closeModal('editStudentModal');
+        switchTab('students');
+    };
+
+    // ======================== PRINCIPAL ACADEMIC FILE MODAL ========================
+    window.viewFullStudentFile = (adm) => {
+        const s = students.find(x => x.adm === adm);
+        if (!s) return;
+        const dates = Object.keys(s.attendance || {});
+        const presentCount = Object.values(s.attendance || {}).filter(v => v === 'P').length;
+        const attPercent = dates.length > 0 ? Math.round((presentCount / dates.length) * 100) : 0;
+        const modalHtml = `<div class="modal active" id="academicFileModal"><div class="modal-content" style="max-width:800px;">
+            <div style="display:flex; justify-content:space-between; align-items:start; border-bottom:1px solid #eee; padding-bottom:15px; margin-bottom:20px;">
+                <div style="display:flex; gap:20px; align-items:center;"><img src="${s.photo || 'https://via.placeholder.com/100'}" style="width:80px; height:80px; border-radius:15px; object-fit:cover; border:2px solid var(--primary);"><div><h2 style="font-family:'Outfit'">${s.name}</h2><p style="color:#64748b">${s.class} · Admission: ${s.adm}</p><span class="badge ${attPercent < 80 ? 'red' : ''}">Attendance: ${attPercent}%</span></div></div>
+                <button class="btn btn-outline" onclick="closeModal('academicFileModal')">✕ Close</button>
+            </div>
+            <div class="detail-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="card" style="margin-bottom:0;"><h3><i class="fas fa-chart-line" style="color:#6366f1"></i> Exam History</h3><table style="margin-top:10px;"><thead><tr><th>Exam</th><th>Grade</th><th>Points</th></tr></thead><tbody>${s.results.length > 0 ? s.results.map(r => `<tr><td>${r.term}</td><td><b style="color:var(--primary)">${r.grade}</b></td><td>${r.points || '--'}</td></tr>`).join('') : '<tr><td colspan="3">No exams recorded yet.</td></tr>'}</tbody>}</div>
+                <div class="card" style="margin-bottom:0;"><h3><i class="fas fa-calendar-check" style="color:#22c55e"></i> Recent Attendance</h3><div style="max-height:200px; overflow-y:auto; margin-top:10px;">${dates.length > 0 ? dates.sort().reverse().map(d => `<div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f1f5f9;"><span>${d}</span><span class="badge ${s.attendance[d] === 'P' ? '' : 'red'}">${s.attendance[d] === 'P' ? 'Present' : 'Absent'}</span></div>`).join('') : '<p>No attendance records found.</p>'}</div></div>
+            </div>
+        </div></div>`;
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+    };
+
+    // ======================== TEACHER DIRECTORY ========================
+    function renderTeachers() {
+        let html = `<div style="display:flex; justify-content:space-between; margin-bottom:20px;"><h3>Faculty</h3>${currentRole==='principal'?'<button class="btn" onclick="openAddTeacherModal()">+ Add Teacher</button>':''}</div><div class="teacher-grid">`;
+        teachers.forEach(t => {
+            const photo = t.photo || 'https://via.placeholder.com/80?text=Staff';
+            html += `<div class="teacher-card"><img src="${photo}" class="teacher-avatar"><h3>${t.name}</h3><p><i class="fas fa-book-open"></i> ${t.subject}</p>
+            <div style="display:flex; gap:10px; justify-content:center;"><a href="tel:${t.phone}" class="btn btn-outline btn-sm"><i class="fas fa-phone"></i></a>${currentRole==='principal'?`<button class="btn btn-outline btn-sm" onclick="openEditTeacher('${t.id}')">Edit</button>`:''}</div></div>`;
+        });
+        html += `</div>`;
+        return html;
+    }
+    window.openAddTeacherModal = () => { const modal = `<div class="modal active" id="addTeacherModal"><div class="modal-content"><h3>New Teacher</h3><input id="newTeachName" placeholder="Name"><input id="newTeachSubject" placeholder="Subject"><input id="newTeachPhone" placeholder="Phone"><br><br><button class="btn" onclick="addTeacher()">Save</button><button class="btn btn-outline" onclick="closeModal('addTeacherModal')">Cancel</button></div></div>`; document.body.insertAdjacentHTML('beforeend', modal); };
+    window.addTeacher = () => { const name = document.getElementById('newTeachName')?.value; if(!name) return; const id = 'T'+(teachers.length+1).toString().padStart(2,'0'); teachers.push({ id, name, subject:document.getElementById('newTeachSubject')?.value, phone:document.getElementById('newTeachPhone')?.value, photo:'' }); saveData(); closeModal('addTeacherModal'); switchTab('teachers'); };
+    window.openEditTeacher = (id) => { const t = teachers.find(x=>x.id===id); const photoUrl = t.photo || 'https://via.placeholder.com/150'; const modal = `<div class="modal active" id="editTeacherModal"><div class="modal-content"><div><h2>Edit ${t.name}</h2><button class="btn btn-outline" onclick="closeModal('editTeacherModal')">✕</button></div><div><img src="${photoUrl}" id="teacherPreview" style="width:80px;height:80px;border-radius:50%;"><input type="file" id="tPhotoUpload" onchange="previewTeacherImage(event)"><button class="btn btn-outline btn-sm" onclick="document.getElementById('tPhotoUpload').click()">Change Photo</button></div><div class="detail-grid"><div><label>Name</label><input id="editTName" value="${t.name.replace(/"/g,'&quot;')}"></div><div><label>Subject</label><input id="editTSubject" value="${t.subject}"></div><div><label>Phone</label><input id="editTPhone" value="${t.phone}"></div><div><label>Email</label><input id="editTEmail" value="${t.email||''}"></div></div><div style="text-align:right;"><button class="btn btn-outline" onclick="closeModal('editTeacherModal')">Cancel</button><button class="btn" onclick="saveTeacherChanges('${t.id}')">Save</button></div></div></div>`; document.body.insertAdjacentHTML('beforeend', modal); };
+    window.previewTeacherImage = (event) => { const reader = new FileReader(); reader.onload = e => { const preview = document.getElementById('teacherPreview'); if(preview) preview.src = e.target.result; }; if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]); };
+    window.saveTeacherChanges = (id) => { const t = teachers.find(x=>x.id===id); t.name = document.getElementById('editTName')?.value || t.name; t.subject = document.getElementById('editTSubject')?.value || t.subject; t.phone = document.getElementById('editTPhone')?.value || t.phone; t.email = document.getElementById('editTEmail')?.value; const newPhoto = document.getElementById('teacherPreview')?.src; if(newPhoto && !newPhoto.includes('placeholder')) t.photo = newPhoto; saveData(); closeModal('editTeacherModal'); switchTab('teachers'); };
+
+    // ======================== STAFF, INVENTORY, FINANCE, LIBRARY ========================
+    function renderStaff() { return `<div class="card"><table><thead><tr><th>ID</th><th>Name</th><th>Role</th><th>Phone</th></tr></thead><tbody>${[...teachers, ...nonStaff].map(m=>`<tr><td>${m.id}</td><td>${m.name}</td><td>${m.subject||m.role}</td><td>${m.phone}</td></tr>`).join('')}</tbody></table></div>`; }
+    function renderInventory() { return `<div class="card"><h3>Inventory</h3><table><thead><tr><th>Item</th><th>Qty</th><th>Status</th></tr></thead><tbody>${inventory.map(i=>`<tr><td>${i.item}</td><td>${i.quantity}</td><td>${i.status}</td></tr>`).join('')}</tbody></tr><button class="btn" onclick="addInventoryItem()">+ Add Item</button></div>`; }
+    window.addInventoryItem = () => { let item = prompt("Item name:"); if(item) inventory.push({item, quantity:0, status:'New'}); saveData(); switchTab('inventory'); };
+    function renderFinanceLedger() { let total = schoolExpenses.reduce((s,e)=>s+e.amount,0); return `<div class="card"><h3>Expenses</h3><p>Total: KSh ${total.toLocaleString()}</p><table><thead><tr><th>Date</th><th>Desc</th><th>Amount</th></tr></thead><tbody>${schoolExpenses.map(e=>`<tr><td>${e.date}</td><td>${e.desc}</td><td>KSh ${e.amount.toLocaleString()}</td></tr>`).join('')}</tbody></table><button class="btn" onclick="addExpense()">+ Record</button></div>`; }
+    window.addExpense = () => { let desc = prompt("Description:"); let amt = parseFloat(prompt("Amount:")); if(desc && amt) schoolExpenses.push({date:new Date().toISOString().slice(0,10), desc, amount:amt, category:'Other'}); saveData(); switchTab('finance'); };
+    function renderLibrary() { if(currentRole==='principal') return `<div class="card"><h3>Library Loans</h3><table><thead><tr><th>Book</th><th>Borrower</th><th>Due</th><th>Action</th></tr></thead><tbody>${libraryLoans.map((l,idx)=>`<tr><td>${l.book}</td><td>${students.find(s=>s.adm===l.borrower)?.name||l.borrower}</td><td>${l.dueDate}</td><td><button class="btn btn-sm" onclick="returnBook(${idx})">Return</button></td></tr>`).join('')||'<tr><td colspan="4">No loans</td></tr>'}</tbody></table><button class="btn" onclick="addLoan()">+ New Loan</button></div>`; else if(currentRole==='student') return `<div class="card"><h3>My Books</h3><ul>${libraryLoans.filter(l=>l.borrower===currentUser.adm).map(l=>`<li>${l.book} (due ${l.dueDate})</li>`).join('')||'<li>None</li>'}</ul></div>`; return ''; }
+    window.addLoan = () => { let book = prompt("Book title:"); let borrowerAdm = prompt("Student Admission:"); let due = prompt("Due date (YYYY-MM-DD):"); if(book && borrowerAdm && due) libraryLoans.push({book, borrower:borrowerAdm, dueDate:due}); saveData(); switchTab('library'); };
+    window.returnBook = (idx) => { libraryLoans.splice(idx,1); saveData(); switchTab('library'); };
+    function renderFees() { if(currentRole==='bursar') return `<div class="card"><h3>Fee Payments</h3><table><thead><tr><th>Student</th><th>Total</th><th>Paid</th><th>Balance</th><th>Invoice</th></tr></thead><tbody>${students.map(s=>{ let bal = s.feesTotal - s.feesPaid; return `<tr><td>${s.name}</td><td>KSh ${s.feesTotal.toLocaleString()}</td><td>KSh ${s.feesPaid.toLocaleString()}</td><td>KSh ${bal.toLocaleString()}</td><td><button class="btn btn-sm" onclick="generateInvoice('${s.adm}')">Invoice</button></td></tr>`; }).join('')}</tbody></table><div class="modal" id="payModal"><div class="modal-content"><h3>Record Payment</h3><input id="payAmount" type="number" placeholder="Amount"><button class="btn" onclick="submitPayment()">Pay</button></div></div></div>`; else return ''; }
+    let selectedPayAdm = null;
+    window.openPayModal = (adm) => { selectedPayAdm = adm; document.getElementById('payModal').classList.add('active'); };
+    window.submitPayment = () => { let amt = parseInt(document.getElementById('payAmount').value); if(amt && selectedPayAdm) { let s = students.find(s=>s.adm===selectedPayAdm); s.feesPaid += amt; saveData(); closeModal('payModal'); switchTab('fees'); } };
+    window.generateInvoice = (adm) => { const s = students.find(x=>x.adm===adm); alert(`📄 INVOICE for ${s.name}\nTotal: KSh ${s.feesTotal}\nPaid: KSh ${s.feesPaid}\nBalance: KSh ${s.feesTotal-s.feesPaid}`); };
+
+    // ======================== ATTENDANCE & RESULTS (Teacher/Student only) ========================
+    function renderAttendance() {
+        if(currentRole === 'teacher') return `<div class="card"><h3>Mark Attendance</h3><select id="attClass"><option>Form 1</option><option>Form 2</option><option>Form 3</option><option>Form 4</option></select><input type="date" id="attDate" value="${new Date().toISOString().slice(0,10)}"><button class="btn" onclick="loadAttendance()">Load</button><div id="attList"></div></div>`;
+        else if(currentRole === 'student') { let myAtt = currentUser.attendance || {}; return `<div class="card"><h3>My Attendance</h3><table><thead><tr><th>Date</th><th>Status</th></tr></thead><tbody>${Object.entries(myAtt).map(([d,st])=>`<tr><td>${d}</td><td>${st?'Present':'Absent'}</td></tr>`).join('')||'<tr><td colspan="2">No records</td></tr>'}</tbody></table></div>`; }
+        return '';
+    }
+    window.loadAttendance = () => { const cls = document.getElementById('attClass').value, date = document.getElementById('attDate').value, list = students.filter(s=>s.class===cls); document.getElementById('attList').innerHTML = list.map(s=>`<div style="display:flex; justify-content:space-between; margin:5px 0;">${s.name} <button class="btn btn-sm" onclick="toggleAtt('${s.adm}','${date}')">${s.attendance[date] === false ? 'Absent' : 'Present'}</button></div>`).join(''); };
+    window.toggleAtt = (adm, date) => { let stu = students.find(s=>s.adm===adm); if(stu) { stu.attendance[date] = stu.attendance[date] === false ? true : false; saveData(); loadAttendance(); } };
+    function renderResults() {
+        if(currentRole === 'teacher') return `<div class="card"><h3>Enter Marks</h3><select id="resStudent">${students.map(s=>`<option value="${s.adm}">${s.name}</option>`).join('')}</select><select id="resSubject"><option>Mathematics</option><option>English</option><option>Physics</option></select><input id="resMarks" type="number" placeholder="Marks"><button class="btn" onclick="addResult()">Save</button></div><div class="card"><h3>All Results</h3></td><thead><tr><th>Student</th><th>Subject</th><th>Marks</th><th>Grade</th></tr></thead><tbody>${examResults.map(r=>`<tr><td>${students.find(s=>s.adm===r.studentAdm)?.name}</td><td>${r.subject}</td><td>${r.marks}</td><td>${r.grade}</td></tr>`).join('')}</tbody></table></div>`;
+        else if(currentRole === 'student') return `<div class="card"><h3>My Results</h3></table><thead><tr><th>Subject</th><th>Marks</th><th>Grade</th></tr></thead><tbody>${examResults.filter(r=>r.studentAdm===currentUser.adm).map(r=>`<tr><td>${r.subject}</td><td>${r.marks}</td><td>${r.grade}</td></tr>`).join('')||'<tr><td colspan="3">No results yet</td></tr>'}</tbody></table></div>`;
+        return '';
+    }
+    window.addResult = () => { let adm = document.getElementById('resStudent').value, subj = document.getElementById('resSubject').value, marks = parseInt(document.getElementById('resMarks').value); if(!isNaN(marks)) { let grade = marks>=80?'A':marks>=65?'B':marks>=50?'C':'D'; examResults.push({studentAdm:adm, subject:subj, marks, grade}); let stu = students.find(s=>s.adm===adm); if(stu) { if(!stu.results) stu.results = []; stu.results.push({term: new Date().toLocaleDateString(), grade, points: marks}); saveData(); } alert(`Result added for ${students.find(s=>s.adm===adm)?.name}`); switchTab('results'); } };
+    function renderNewsletter() { if(currentRole !== 'principal') return '<p>Only principal can post.</p>'; return `<div class="card"><h3>Post Announcement</h3><input id="newsTitle" placeholder="Title"><textarea id="newsContent" rows="3"></textarea><button class="btn" onclick="postNews()">Broadcast</button></div><div class="card"><h3>History</h3>${newsletters.map(n=>`<div><b>${n.title}</b> - ${n.date}<p>${n.content}</p></div>`).join('')}</div>`; }
+    window.postNews = () => { let t = document.getElementById('newsTitle').value.trim(), c = document.getElementById('newsContent').value.trim(); if(t&&c) { newsletters.unshift({id:Date.now(), title:t, content:c, date:new Date().toLocaleString(), sender:currentUser.role}); saveData(); document.getElementById('newsTitle').value=''; document.getElementById('newsContent').value=''; switchTab('newsletter'); updateNotificationBell(); alert("Published!"); } };
+    function renderAssignments() { if(currentRole === 'teacher') return `<div class="card"><h3>Create Assignment</h3><input id="assignSubject" placeholder="Subject"><input id="assignTitle" placeholder="Title"><input type="date" id="assignDue"><select id="assignClass"><option>Form 1</option><option>Form 2</option><option>Form 3</option><option>Form 4</option></select><button class="btn" onclick="createAssignment()">Publish</button></div><div class="card"><h3>All</h3>${assignments.map(a=>`<div><b>${a.subject}</b>: ${a.title} (Due ${a.dueDate})</div>`).join('')}</div>`; else if(currentRole === 'student') return `<div class="card"><h3>My Assignments</h3>${assignments.filter(a=>a.class===currentUser.class).map(a=>`<div><b>${a.subject}</b>: ${a.title} (Due ${a.dueDate}) <button class="btn btn-sm" onclick="alert('Submit via file upload (simulated)')">Upload</button></div>`).join('')||'<p>None</p>'}</div>`; return ''; }
+    window.createAssignment = () => { let subj=document.getElementById('assignSubject').value, title=document.getElementById('assignTitle').value, due=document.getElementById('assignDue').value, cls=document.getElementById('assignClass').value; if(subj && title) { assignments.push({id:Date.now(), subject:subj, title, dueDate:due, class:cls}); saveData(); switchTab('assignments'); } };
+
+    // ======================== DISCIPLINE POINTS ========================
+    function renderTeacherDiscipline() { return `<div class="card"><h3>Give Discipline Points</h3><select id="discStudent">${students.map(s=>`<option value="${s.adm}">${s.name} (${s.class})</option>`).join('')}</select><input id="discPoints" type="number" placeholder="Points (+ merit, - demerit)"><input id="discReason" placeholder="Reason"><button class="btn" onclick="addDisciplinePoints()">Add Points</button></div><div class="card"><h3>Points History</h3><table><thead><tr><th>Student</th><th>Points</th><th>Reason</th><th>Date</th></tr></thead><tbody>${disciplinePoints.map(dp=>`<tr><td>${students.find(s=>s.adm===dp.studentAdm)?.name}</td><td><span class="points-badge">${dp.points}</span></td><td>${dp.reason}</td><td>${dp.date}</td></tr>`).join('')}</tbody></table></div>`; }
+    window.addDisciplinePoints = () => { const adm = document.getElementById('discStudent').value; const points = parseInt(document.getElementById('discPoints').value); const reason = document.getElementById('discReason').value; if (isNaN(points)) return alert("Enter points"); disciplinePoints.push({ studentAdm: adm, points, reason, date: new Date().toLocaleString() }); saveData(); alert(`Points added for ${students.find(s=>s.adm===adm).name}`); switchTab('discipline'); };
+    function renderStudentDiscipline() { const myPoints = disciplinePoints.filter(dp => dp.studentAdm === currentUser.adm); const total = myPoints.reduce((sum,dp)=>sum+dp.points,0); return `<div class="card"><h3>My Behaviour Points</h3><p><span class="points-badge" style="font-size:20px;">${total}</span> total points</p><table><thead><tr><th>Points</th><th>Reason</th><th>Date</th></tr></thead><tbody>${myPoints.map(dp=>`<tr><td>${dp.points}</td><td>${dp.reason}</td><td>${dp.date}</td></tr>`).join('')||'<tr><td colspan="3">No records</td></tr>'}</tbody></table></div>`; }
+
+    // ======================== GATE PASS ========================
+    function renderTeacherGatePass() { return `<div class="card"><h3>Issue Gate Pass</h3><select id="gpStudent">${students.map(s=>`<option value="${s.adm}">${s.name}</option>`).join('')}</select><input type="date" id="gpDate" value="${new Date().toISOString().slice(0,10)}"><button class="btn" onclick="issueGatePass()">Issue Pass</button></div><div class="card"><h3>Today's Passes</h3><ul>${gatePasses.filter(g=>g.date===new Date().toISOString().slice(0,10)).map(g=>`<li>${students.find(s=>s.adm===g.studentAdm)?.name} - issued by ${g.issuedBy}</li>`).join('')||'<li>None</li>'}</ul></div>`; }
+    window.issueGatePass = () => { const studentAdm = document.getElementById('gpStudent').value; const date = document.getElementById('gpDate').value; gatePasses.push({ studentAdm, date, issuedBy: currentUser.name }); saveData(); alert(`Gate pass issued for ${students.find(s=>s.adm===studentAdm).name}`); switchTab('gatepass'); };
+    function renderStudentGatePass() { const myPasses = gatePasses.filter(g => g.studentAdm === currentUser.adm && g.date >= new Date().toISOString().slice(0,10)); return `<div class="card"><h3>My Gate Passes</h3>${myPasses.map(p=>`<div class="card" style="border:2px dashed #3b82f6;"><b>Valid until: ${p.date}</b><br>Issued by: ${p.issuedBy}<br><i class="fas fa-qrcode"></i> Show to security</div>`).join('')||'<p>No active passes</p>'}</div>`; }
+
+    // ======================== UTILITIES ========================
+    function closeModal(id) { let el = document.getElementById(id); if(el) el.classList.remove('active'); else document.querySelectorAll('.modal').forEach(m=>{if(m.id===id) m.classList.remove('active');}); }
+    function attachStudentEvents() {}
+    function initAttendanceMark() {}
+    function initResultsEntry() {}
+</script>
+</body>
+</html>

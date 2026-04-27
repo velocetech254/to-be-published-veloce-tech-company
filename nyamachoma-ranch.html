@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Nyama Choma Ranch | Kenya’s Best Nyama Choma · Order From Your Table</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #b63e1a;
+            --primary-dark: #8b2e12;
+            --gold: #d4a853;
+            --dark: #2d1c15;
+            --light: #fff9f3;
+            --text: #3a2a20;
+            --white: #ffffff;
+            --border: #e0cfb5;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5; color: var(--text); background: var(--light); }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin:0 auto; padding:0 15px; }
+
+        /* Header */
+        .header { background: var(--dark); color: white; padding: 10px 0; position: sticky; top:0; z-index:100; }
+        .header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; }
+        .logo span { color: var(--gold); }
+        .nav-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+        .nav-links a { color: white; font-weight: 500; font-size: 13px; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--gold); }
+        .order-btn { background: var(--primary); color: white; padding: 8px 20px; border-radius: 4px; font-weight: 600; border: none; cursor: pointer; transition: background 0.3s; display: flex; align-items: center; gap: 8px; }
+        .order-btn:hover { background: var(--primary-dark); }
+
+        /* Hero */
+        .hero {
+            background: url('https://images.pexels.com/photos/262918/pexels-photo-262918.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover no-repeat;
+            min-height: 85vh; display: flex; align-items: center; text-align: center; color: white; position: relative;
+        }
+        .hero::before { content:''; position:absolute; inset:0; background: rgba(0,0,0,0.6); }
+        .hero-content { position: relative; z-index:1; max-width:750px; margin:0 auto; padding: 0 20px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 6vw, 3.8rem); line-height: 1.2; margin-bottom: 20px; }
+        .hero h1 span { color: var(--gold); }
+        .hero p { font-size: 1.1rem; opacity:0.95; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero .btn { background: var(--primary); color: white; padding: 14px 35px; border-radius: 4px; font-weight: 700; display: inline-block; transition: background 0.3s; }
+
+        /* Section Headings */
+        .section-head { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--dark); margin-bottom: 20px; position: relative; display: inline-block; }
+        .section-head::after { content:''; width: 60px; height: 3px; background: var(--primary); position: absolute; bottom: -5px; left:0; }
+
+        /* Menu Tabs */
+        .menu-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+        .menu-tab { padding: 8px 20px; border: 2px solid var(--primary); background: transparent; color: var(--primary); border-radius: 50px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 13px; }
+        .menu-tab.active, .menu-tab:hover { background: var(--primary); color: white; }
+
+        /* Menu Items */
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px; }
+        .menu-card { background: white; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; transition: transform 0.2s; display: flex; flex-direction: column; }
+        .menu-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .menu-card img { width:100%; height:180px; object-fit: cover; }
+        .menu-info { padding: 15px; flex:1; display: flex; flex-direction: column; }
+        .menu-info h4 { font-size: 16px; color: var(--dark); margin-bottom: 5px; }
+        .menu-info p { font-size: 12px; color: #666; flex:1; margin-bottom: 10px; line-height: 1.5; }
+        .menu-info .price { font-weight: 700; color: var(--primary); font-size: 15px; margin-bottom: 10px; }
+        .btn-add { background: var(--primary); color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer; font-weight: 600; margin-top: auto; }
+        .btn-add:hover { background: var(--primary-dark); }
+
+        /* Order Panel */
+        .order-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 999; display: none; }
+        .order-overlay.active { display: block; }
+        .order-panel { position: fixed; top:0; right:-420px; width:100%; max-width: 400px; height:100%; background: white; box-shadow: -4px 0 25px rgba(0,0,0,0.15); z-index: 1000; transition: right 0.3s ease; display: flex; flex-direction: column; }
+        .order-panel.open { right:0; }
+        .panel-header { padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .panel-header h3 { font-size: 18px; }
+        .close-panel { background: none; border: none; font-size: 22px; cursor: pointer; }
+        .order-items { flex:1; overflow-y: auto; padding: 15px; }
+        .order-item { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .order-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
+        .order-item-info { flex:1; }
+        .order-item-info .item-name { font-weight: 600; font-size: 13px; }
+        .order-item-info .item-price { font-size: 12px; color: var(--primary); }
+        .qty-ctrl { display: flex; gap: 5px; align-items: center; margin-top: 4px; }
+        .qty-ctrl button { background: #eee; border:1px solid var(--border); width:24px; height:24px; border-radius:4px; cursor: pointer; }
+        .remove-item { color: var(--primary); cursor: pointer; font-size: 12px; }
+        .panel-footer { padding: 15px; border-top: 1px solid var(--border); }
+        .panel-footer .table-input { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .table-input label { font-size: 13px; font-weight: 600; }
+        .table-input input { width: 80px; padding: 6px; border: 1px solid var(--border); border-radius: 4px; text-align: center; }
+        .panel-footer .total { font-weight: 700; font-size: 18px; margin-bottom: 10px; }
+        .btn-order { width:100%; padding:12px; background: var(--primary); color:white; border:none; border-radius:4px; font-weight: 700; cursor: pointer; }
+        .btn-order:disabled { opacity:0.6; cursor: not-allowed; }
+
+        /* Reservation Form */
+        .reservation-form { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; max-width: 600px; }
+        .reservation-form .full-width { grid-column: span 2; }
+        .reservation-form input, .reservation-form textarea, .reservation-form select { width:100%; padding: 10px; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; }
+        .btn-reserve { background: var(--primary); color: white; border: none; padding: 12px 30px; border-radius: 4px; font-weight: 600; cursor: pointer; }
+
+        /* How it works */
+        .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 20px; margin-top: 20px; }
+        .step-card { background: white; border: 1px solid var(--border); padding: 20px; border-radius: 8px; text-align: center; }
+        .step-card i { font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+        .step-card h4 { margin-bottom: 8px; }
+
+        /* Testimonials */
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap: 20px; }
+        .testimonial-card { background: white; border: 1px solid var(--border); padding: 20px; border-radius: 8px; }
+        .testimonial-card .quote { font-style: italic; color: #555; }
+        .testimonial-card .author { font-weight: 600; color: var(--primary); margin-top: 10px; }
+
+        footer { background: var(--dark); color: #ccc; padding: 30px 0; font-size: 13px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 20px; }
+        .footer-grid h4 { color: white; margin-bottom: 10px; }
+        .footer-grid ul { list-style: none; }
+        .footer-grid ul li { margin-bottom: 5px; }
+        .footer-grid ul li a { color: #aaa; }
+
+        @media(max-width:768px) {
+            .hero h1 { font-size:2.2rem; }
+            .reservation-form { grid-template-columns: 1fr; }
+            .reservation-form .full-width { grid-column: span 1; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">Nyama Choma <span>Ranch</span></a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#how">How It Works</a></li>
+                <li><a href="#reserve">Book a Table</a></li>
+                <li><a href="#about">Our Story</a></li>
+            </ul>
+            <button class="order-btn" id="orderToggle"><i class="fas fa-shopping-basket"></i> My Order <span id="orderCountBadge" style="background:var(--gold); color:#000; padding:2px 6px; border-radius:50%; font-size:11px;">0</span></button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Kenya’s <span>Roast</span> of Champions</h1>
+            <p>Order nyama choma directly from your table. No queuing, no waving down waiters. Just sizzling meat, cold drinks, and the warmth of African hospitality.</p>
+            <a href="#menu" class="btn">Start Your Order</a>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section style="padding:50px 0;" id="menu">
+        <div class="container">
+            <h2 class="section-head">Our Menu</h2>
+            <div class="menu-tabs" id="menuTabs">
+                <button class="menu-tab active" data-category="all">All</button>
+                <button class="menu-tab" data-category="starter">Starters</button>
+                <button class="menu-tab" data-category="nyama">Nyama Choma</button>
+                <button class="menu-tab" data-category="main">Main Course</button>
+                <button class="menu-tab" data-category="veg">Vegetarian</button>
+                <button class="menu-tab" data-category="dessert">Desserts</button>
+                <button class="menu-tab" data-category="drink">Drinks</button>
+            </div>
+            <div class="menu-grid" id="menuGrid"></div>
+        </div>
+    </section>
+
+    <!-- How It Works / Order From Table -->
+    <section style="background:var(--white); padding:50px 0;" id="how">
+        <div class="container">
+            <h2 class="section-head">Order From Your Table</h2>
+            <p style="margin-bottom:20px;">No waiting for a waiter – just scan, tap, and your sizzling platter is on its way. Here’s how it works:</p>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <i class="fas fa-qrcode"></i>
+                    <h4>1. Scan the QR</h4>
+                    <p>Every table has a unique QR code. Open your phone camera and tap to open our digital menu.</p>
+                </div>
+                <div class="step-card">
+                    <i class="fas fa-list-ul"></i>
+                    <h4>2. Pick Your Favourites</h4>
+                    <p>Browse our full menu, add items to your order, and adjust quantities as you like.</p>
+                </div>
+                <div class="step-card">
+                    <i class="fas fa-chair"></i>
+                    <h4>3. Enter Table Number</h4>
+                    <p>Your order is automatically linked to your table number – our runners know exactly where to find you.</p>
+                </div>
+                <div class="step-card">
+                    <i class="fas fa-utensils"></i>
+                    <h4>4. Enjoy!</h4>
+                    <p>Relax, sip your drink, and in minutes your food arrives hot off the grill. No counter, no hassle.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation -->
+    <section style="padding:50px 0;" id="reserve">
+        <div class="container">
+            <h2 class="section-head">Book a Table</h2>
+            <p style="margin-bottom:20px;">Prefer to reserve ahead? Fill in your details and we’ll have the best spot waiting.</p>
+            <form class="reservation-form" id="reservationForm" onsubmit="event.preventDefault(); submitReservation();">
+                <input type="text" placeholder="Your Name" required>
+                <input type="tel" placeholder="Phone Number" required>
+                <input type="date" required class="full-width">
+                <select required class="full-width">
+                    <option value="">Select Time</option>
+                    <option>12:00 PM</option><option>1:00 PM</option><option>2:00 PM</option><option>7:00 PM</option><option>8:00 PM</option>
+                </select>
+                <input type="number" placeholder="Party Size" min="1" required class="full-width">
+                <textarea placeholder="Special Requests (e.g. birthday, high chair)" class="full-width"></textarea>
+                <button type="submit" class="btn-reserve full-width">Reserve Now</button>
+            </form>
+            <div id="reservationMsg" style="margin-top:10px; color:green; font-weight:600;"></div>
+        </div>
+    </section>
+
+    <!-- About / Story -->
+    <section style="padding:50px 0; background:var(--light);" id="about">
+        <div class="container" style="display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;">
+            <img src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ranch atmosphere" style="width:100%; border-radius:8px;">
+            <div>
+                <h2 class="section-head">The Ranch Story</h2>
+                <p>Nyama Choma Ranch opened its doors in 2014 with a single grill and a secret marinade recipe handed down three generations. What began as a roadside choma joint has grown into Nairobi’s most beloved roast house, famous for its succulent goat, beef, and chicken slow‑roasted over acacia wood.</p>
+                <p>Our meat comes from local pastoralists in Kajiado and Narok – grass‑fed, free‑range, and ethically raised. The marinade? A guarded blend of ginger, garlic, lemon, and a touch of pilipili that caramelizes over the flames. Every platter is served with fresh kachumbari, ugali or mukimo, and a side of our legendary chilli sauce.</p>
+                <p>We believe nyama choma is best enjoyed with friends and family, in an atmosphere that feels like home. That’s why our tables are arranged around open grills, and our outdoor garden is filled with laughter late into the evening. Karibu chakula!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section style="padding:50px 0;">
+        <div class="container">
+            <h2 class="section-head">Raving Reviews</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="quote">"The table ordering system is genius! We ordered from our phone and the food arrived in 15 minutes. The goat choma was perfectly charred, and the cold Tusker was a dream. This place is a must‑visit."</p>
+                    <p class="author">— Brian M., Nairobi</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"I've been coming to Nyama Choma Ranch for years. Their consistency is unmatched – the meat is always tender, the kachumbari fresh, and the service warm. Now with the scan‑to‑order feature, it's even better."</p>
+                    <p class="author">— Wanjiru K., Karen</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"Brought my team here for a dinner and everyone was blown away. The variety of drinks impressed me – from fresh mango juice to Dawa cocktails. We’ll definitely make this our monthly spot."</p>
+                    <p class="author">— Michael O., Westlands</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4>Nyama Choma Ranch</h4>
+                <p>Ngong Road, Nairobi · Open Mon‑Sun 11am‑10pm</p>
+                <p>Call: +254 711 222 333 · info@nyamachomaranch.co.ke</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#menu">Full Menu</a></li>
+                    <li><a href="#reserve">Reservations</a></li>
+                    <li><a href="#">Catering</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
+                    <li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li>
+                    <li><a href="#"><i class="fab fa-tiktok"></i> TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:20px; font-size:12px; border-top:1px solid #555; padding-top:15px;">
+            © 2026 Nyama Choma Ranch – sample website built by Veloce Tech Company.
+        </div>
+    </footer>
+
+    <!-- Order Panel -->
+    <div class="order-overlay" id="orderOverlay"></div>
+    <div class="order-panel" id="orderPanel">
+        <div class="panel-header">
+            <h3>Your Order</h3>
+            <button class="close-panel" id="closePanel">&times;</button>
+        </div>
+        <div class="order-items" id="orderItems"><p style="text-align:center; color:#888;">No items yet. Tap menu to add.</p></div>
+        <div class="panel-footer">
+            <div class="table-input">
+                <label for="tableNumber">Table #</label>
+                <input type="number" id="tableNumber" placeholder="e.g. 5" min="1" required>
+            </div>
+            <div class="total">Total: KSh <span id="orderTotal">0</span></div>
+            <button class="btn-order" id="placeOrderBtn">Place Order for Your Table</button>
+        </div>
+    </div>
+
+    <script>
+        const menuItems = [
+            { id:1, name:"Samosas (4 pcs)", desc:"Crispy beef samosas with tamarind chutney. A classic Kenyan starter with a tangy twist.", price:350, category:"starter", img:"https://images.pexels.com/photos/1435907/pexels-photo-1435907.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:2, name:"Mukimo Croquettes", desc:"Mashed potatoes, maize, and greens rolled into crispy balls, served with a spicy dip.", price:380, category:"starter", img:"https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:3, name:"Goat Nyama Choma (1/2 kg)", desc:"Tender goat meat, marinated for 24 hours in our secret blend of ginger, garlic, and lemon, then slow‑roasted over acacia wood. Served with kachumbari.", price:1200, category:"nyama", img:"https://images.pexels.com/photos/618775/pexels-photo-618775.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:4, name:"Beef Nyama Choma (1/2 kg)", desc:"Premium beef ribs, char‑grilled to perfection. Smoky, juicy, and falling off the bone.", price:1100, category:"nyama", img:"https://images.pexels.com/photos/769969/pexels-photo-769969.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:5, name:"Grilled Tilapia (Whole)", desc:"Fresh fish from Lake Victoria, scored and stuffed with herbs, served with ugali and sautéed spinach.", price:950, category:"main", img:"https://images.pexels.com/photos/46239/salmon-dish-food-meal-46239.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:6, name:"Wet Fry Chicken", desc:"Kenyan‑style pan‑fried chicken, slow‑cooked in a rich tomato and onion gravy. Comes with steamed rice or chapati.", price:780, category:"main", img:"https://images.pexels.com/photos/60616/frying-pan-empty-fry-egg-60616.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:7, name:"Mbuzi Choma Platter (Full)", desc:"A feast for four: 2 kg of goat choma, four types of sides, and a jug of fresh juice. Perfect for sharing.", price:3600, category:"nyama", img:"https://images.pexels.com/photos/1326947/pexels-photo-1326947.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:8, name:"Vegetable Coconut Curry", desc:"Seasonal market vegetables simmered in a creamy coconut sauce with mild spices. A vegetarian delight.", price:650, category:"veg", img:"https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:9, name:"Mandazi & Cardamom Cream", desc:"Warm Kenyan doughnuts dusted with cardamom sugar, paired with a sweet cream dip. A nostalgic dessert.", price:250, category:"dessert", img:"https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:10, name:"Tusker Malt (330ml)", desc:"Kenya’s premium lager, crisp and refreshing. The perfect partner to nyama choma.", price:200, category:"drink", img:"https://images.pexels.com/photos/1089934/pexels-photo-1089934.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:11, name:"Dawa Cocktail", desc:"Vodka, lime, honey, and a stick of sugar cane – Kenya’s signature drink with a medicinal twist.", price:450, category:"drink", img:"https://images.pexels.com/photos/128408/pexels-photo-128408.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:12, name:"Fresh Mango Juice", desc:"Pureed local mangoes with a squeeze of lime, served over ice. No added sugar.", price:280, category:"drink", img:"https://images.pexels.com/photos/4113834/pexels-photo-4113834.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:13, name:"Passion Fruit Soda", desc:"A fizzy homemade soda made from fresh passion fruit pulp. Sweet, tangy, and incredibly refreshing.", price:220, category:"drink", img:"https://images.pexels.com/photos/5946081/pexels-photo-5946081.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:14, name:"Ginger & Lemon Infusion", desc:"Housemade still drink – fresh ginger and lemon, lightly sweetened. Great for digestion after a big meal.", price:150, category:"drink", img:"https://images.pexels.com/photos/3737726/pexels-photo-3737726.jpeg?auto=compress&cs=tinysrgb&w=300" },
+            { id:15, name:"Mineral Water (500ml)", desc:"Chilled still water to accompany your meal.", price:100, category:"drink", img:"https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=300" }
+        ];
+
+        let order = [];
+        let currentCategory = 'all';
+
+        const menuGrid = document.getElementById('menuGrid');
+        const orderItemsEl = document.getElementById('orderItems');
+        const orderTotalEl = document.getElementById('orderTotal');
+        const orderCountBadge = document.getElementById('orderCountBadge');
+        const orderPanel = document.getElementById('orderPanel');
+        const orderOverlay = document.getElementById('orderOverlay');
+        const tableInput = document.getElementById('tableNumber');
+
+        function renderMenu(category) {
+            const filtered = category === 'all' ? menuItems : menuItems.filter(item => item.category === category);
+            menuGrid.innerHTML = filtered.map(item => `
+                <div class="menu-card">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="menu-info">
+                        <h4>${item.name}</h4>
+                        <p>${item.desc}</p>
+                        <div class="price">KSh ${item.price}</div>
+                        <button class="btn-add" onclick="addToOrder(${item.id})">Add to Order</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToOrder(id) {
+            const item = menuItems.find(m => m.id === id);
+            const existing = order.find(o => o.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                order.push({ ...item, quantity: 1 });
+            }
+            updateOrderUI();
+            openOrderPanel();
+        }
+
+        function removeFromOrder(id) {
+            order = order.filter(o => o.id !== id);
+            updateOrderUI();
+        }
+
+        function changeQty(id, delta) {
+            const item = order.find(o => o.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) removeFromOrder(id);
+            }
+            updateOrderUI();
+        }
+
+        function updateOrderUI() {
+            const totalItems = order.reduce((sum, item) => sum + item.quantity, 0);
+            orderCountBadge.textContent = totalItems;
+            const total = order.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            orderTotalEl.textContent = total.toLocaleString();
+
+            if (order.length === 0) {
+                orderItemsEl.innerHTML = '<p style="text-align:center; color:#888;">No items yet. Tap menu to add.</p>';
+            } else {
+                orderItemsEl.innerHTML = order.map(item => `
+                    <div class="order-item">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="order-item-info">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-price">KSh ${item.price} each</div>
+                            <div class="qty-ctrl">
+                                <button onclick="changeQty(${item.id}, -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="changeQty(${item.id}, 1)">+</button>
+                            </div>
+                            <span class="remove-item" onclick="removeFromOrder(${item.id})">Remove</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function openOrderPanel() {
+            orderPanel.classList.add('open');
+            orderOverlay.classList.add('active');
+        }
+        function closeOrderPanel() {
+            orderPanel.classList.remove('open');
+            orderOverlay.classList.remove('active');
+        }
+
+        // Place order with table number
+        function placeTableOrder() {
+            const tableNum = tableInput.value.trim();
+            if (order.length === 0) {
+                alert('Your order is empty. Please add items from the menu.');
+                return;
+            }
+            if (!tableNum || parseInt(tableNum) < 1) {
+                alert('Please enter a valid table number before placing your order.');
+                return;
+            }
+            const total = order.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            alert(`Order placed for Table ${tableNum}! \nTotal: KSh ${total.toLocaleString()}\nYour food will be prepared and served to your table shortly. (Demo)`);
+            order = [];
+            updateOrderUI();
+            tableInput.value = '';
+            closeOrderPanel();
+        }
+
+        // Menu tabs
+        document.getElementById('menuTabs').addEventListener('click', (e) => {
+            if (e.target.classList.contains('menu-tab')) {
+                document.querySelectorAll('.menu-tab').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentCategory = e.target.dataset.category;
+                renderMenu(currentCategory);
+            }
+        });
+
+        // Order toggle
+        document.getElementById('orderToggle').addEventListener('click', openOrderPanel);
+        document.getElementById('closePanel').addEventListener('click', closeOrderPanel);
+        document.getElementById('orderOverlay').addEventListener('click', closeOrderPanel);
+        document.getElementById('placeOrderBtn').addEventListener('click', placeTableOrder);
+
+        // Reservation
+        function submitReservation() {
+            document.getElementById('reservationMsg').innerText = 'Thank you! Your reservation request has been sent. We’ll confirm within 15 minutes. (Demo)';
+            document.getElementById('reservationForm').reset();
+            setTimeout(() => { document.getElementById('reservationMsg').innerText = ''; }, 5000);
+        }
+
+        // Initial render
+        renderMenu('all');
+        updateOrderUI();
+    </script>
+</body>
+</html>

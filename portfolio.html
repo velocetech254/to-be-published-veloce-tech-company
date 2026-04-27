@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Portfolio · Veloce Tech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Enhanced portfolio card styles */
+        .portfolio-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
+        }
+        .portfolio-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        .portfolio-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        .portfolio-item:hover .portfolio-image img {
+            transform: scale(1.04);
+        }
+        .portfolio-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .portfolio-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--brand-primary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        .portfolio-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .portfolio-content p {
+            font-size: 12px;
+            color: #5a6a7a;
+            margin-bottom: 20px;
+            flex: 1;
+        }
+        .btn-demo {
+            display: inline-block;
+            background: var(--brand-primary);
+            color: white;
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s ease;
+            border: 1px solid var(--brand-primary);
+            margin-top: auto;
+            align-self: flex-start;
+        }
+        .btn-demo:hover {
+            background: white;
+            color: var(--brand-primary);
+        }
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0 40px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border-light);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: var(--brand-primary);
+            border-color: var(--brand-primary);
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .portfolio-image {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="index.html" class="logo-img">
+                <img src="veloce log.jpeg" alt="Veloce Tech Logo">
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <a href="contact.html" class="btn btn-primary btn-small">Start Project</a>
+            </div>
+            <div class="hamburger" id="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" style="padding-bottom: 20px;">
+            <div class="container">
+                <div class="hero-content" style="max-width: 100%; text-align: center;">
+                    <h1 class="hero-title">Our <span class="title-accent">Portfolio</span></h1>
+                    <p class="hero-description" style="max-width: 800px; margin: 0 auto;">
+                        A showcase of interactive, fully‑functional websites built for diverse industries. Click any project to explore the live demo.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Buttons -->
+        <div class="container">
+            <div class="portfolio-filter" id="portfolioFilter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="hospitality">Hospitality</button>
+                <button class="filter-btn" data-filter="retail">Retail</button>
+                <button class="filter-btn" data-filter="food">Food</button>
+                <button class="filter-btn" data-filter="craft">Craft</button>
+                <button class="filter-btn" data-filter="health">Health</button>
+                <button class="filter-btn" data-filter="management">Management</button>
+            </div>
+        </div>
+
+        <!-- Portfolio Grid -->
+        <section class="section" style="padding-top: 0;">
+            <div class="container">
+                <div class="portfolio-grid" id="portfolioGrid">
+                    <!-- 1. Savannah Pride Hotel -->
+                    <div class="portfolio-item" data-category="hospitality">
+                        <div class="portfolio-image">
+                            <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Savannah Pride Hotel">
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">Hospitality</div>
+                            <h4>Savannah Pride Hotel</h4>
+                            <p>A luxury hotel website with room booking, restaurant menus, photo gallery, and contact forms. Elegant, responsive, and conversion‑focused.</p>
+                            <a href="savannah-hotel.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                        </div>
+                    </div>
+
+                    <!-- 2. Amani Retail Shop -->
+                    <div class="portfolio-item" data-category="retail">
+                        <div class="portfolio-image">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPwXMKgLGqOBcXoxqSCmVtVAohes47kZEClQ&s" alt="Amani Retail Shop">
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">Retail</div>
+                            <h4>Amani Retail Shop</h4>
+                            <p>A dense, everyday Kenyan retail store with product categories, cart simulation, and checkout. Compact layout with rich product descriptions.</p>
+                            <a href="amani-retail.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                        </div>
+                    </div>
+
+                    <!-- 3. FreshMart Supermarket -->
+                    <div class="portfolio-item" data-category="retail">
+                        <div class="portfolio-image">
+                            <img src="https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=600" alt="FreshMart Supermarket">
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">Retail / Grocery</div>
+                            <h4>FreshMart Supermarket</h4>
+                            <p>Interactive online grocery with aisle filtering, search, working cart, loyalty program, and full checkout simulation.</p>
+                            <a href="freshmart.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                        </div>
+                    </div>
+
+                    <!-- 4. Nyama Choma Ranch -->
+                    <div class="portfolio-item" data-category="food">
+                        <div class="portfolio-image">
+                            <img src="https://images.pexels.com/photos/262918/pexels-photo-262918.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Nyama Choma Ranch">
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">Restaurant</div>
+                            <h4>Nyama Choma Ranch</h4>
+                            <p>Vibrant Kenyan restaurant with table‑side ordering, menu filters, table reservation, and full digital menu.</p>
+                            <a href="nyamachoma-ranch.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                        </div>
+                    </div>
+
+                    <!-- 5. Miti Masters Carpentry -->
+                    <div class="portfolio-item" data-category="craft">
+                        <div class="portfolio-image">
+                            <img src="https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Miti Masters Carpentry">
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">Craft & Trade</div>
+                            <h4>Miti Masters Carpentry</h4>
+                            <p>Workshop portfolio with project gallery, custom order builder, wood type guide, and detailed product listings.</p>
+                            <a href="miti-masters.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                        </div>
+                    </div>
+
+                    <!-- 6. Afya First Hospital -->
+                    <div class="portfolio-item" data-category="health">
+                        <div class="portfolio-image">
+                            <img src="https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Afya First Hospital">
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">Healthcare</div>
+                            <h4>Afya First Hospital</h4>
+                            <p>A modern hospital site with appointment booking, doctor profiles, service listings, and emergency information.</p>
+                            <a href="afya-first-hospital.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                        </div>
+                    </div>
+
+                    <!-- 7. ShuleMaster School Management System -->
+                    <div class="portfolio-item" data-category="management">
+                        <div class="portfolio-image">
+                            <img src="https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=600" alt="ShuleMaster School Management System">
+                        </div>
+                        <div class="portfolio-content">
+                            <div class="portfolio-category">Management System</div>
+                            <h4>ShuleMaster</h4>
+                            <p>Complete school management system with role‑based logins, student/teacher administration, fees, attendance, and exam results.</p>
+                            <a href="school-system.html" target="_blank" class="btn-demo">View Live Demo →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div style="text-align: center; padding: 40px 0;">
+            <p style="margin-bottom: 15px; font-size: 16px; color: var(--text-primary);">Ready to have a project like these?</p>
+            <a href="contact.html" class="btn btn-primary btn-large">Start a Conversation →</a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                       <h4>Contacts</h4>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>velocetechcompany@gmail.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+254 787 764 095 | +254 720 718 752</span>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Web Development and graphic design</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="https://www.facebook.com/profile.php?id=61576404231383" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/velocetechcompany?igsh=dmxqd3Q2dGJ6Z2Np" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/veloce_tech" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.tiktok.com/@veloce_tech" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://linkedin.com/company/veloce-tech" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:velocetechcompany@gmail.com" style="color: white; font-size: 14px;"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Veloce Tech Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/254740682321?text=Hello%20Veloce%20Tech%20Company%2C%20I%20would%20like%20to%20inquire%20about%20your%20services."
+       class="whatsapp-float"
+       target="_blank"
+       rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="script.js"></script>
+    <script>
+        // Portfolio filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.style.display = 'flex';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
