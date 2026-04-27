@@ -4,573 +4,418 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <!--PRIMARY SEO-->
-    <title>FreshMart Supermarket | Your Family's Grocery Store in Nairobi</title>
-    <meta name="description" content="FreshMart Supermarket offers fresh groceries, dairy, bakery, and household essentials. Order online for same‑day delivery in Nairobi. Quality and value since 2017." />
-    <meta name="keywords" content="supermarket Nairobi, online grocery Kenya, fresh produce, dairy, bakery, FreshMart" />
+    <title>Veloce Tech · Digital Innovation Studio</title>
+    <meta name="description" content="Veloce Tech delivers custom website development, graphic design, and digital transformation. Modern web solutions for African businesses." />
+    <meta name="keywords" content="web development, graphic design, digital agency, Kenya, Nairobi, website design, Veloce Tech" />
     <meta name="author" content="Veloce Tech Company"/>
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://velocetechcompany.com/freshmart.html" />
-    <!-- Open Graph -->
-    <meta property="og:title" content="FreshMart Supermarket | Interactive Grocery Demo" />
-    <meta property="og:description" content="Shop fresh groceries online with aisle filtering, cart, loyalty points, and checkout simulation." />
+    <link rel="canonical" href="https://velocetechcompany.com/" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="Veloce Tech · Digital Innovation Studio" />
+    <meta property="og:description" content="Custom websites, graphic design, and digital transformation. We build beautiful, functional experiences that drive results." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://velocetechcompany.com/freshmart.html" />
-    <meta property="og:image" content="https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg" />
+    <meta property="og:url" content="https://velocetechcompany.com/" />
+    <meta property="og:image" content="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" />
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FreshMart Supermarket" />
-    <meta name="twitter:description" content="Your trusted Nairobi grocery store. Order online with same‑day delivery." />
-    <meta name="twitter:image" content="https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg" />
+    <meta name="twitter:title" content="Veloce Tech · Digital Innovation Studio" />
+    <meta name="twitter:description" content="Modern website design, development, and branding. Let's build your digital presence." />
+    <meta name="twitter:image" content="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg" />
     <!-- Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "GroceryStore",
-      "name": "FreshMart Supermarket",
-      "url": "https://velocetechcompany.com/freshmart.html",
-      "description": "Nairobi's trusted supermarket for fresh groceries and household essentials.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Nairobi",
-        "addressCountry": "KE"
-      }
+      "@type": "Organization",
+      "name": "Veloce Tech Company",
+      "url": "https://velocetechcompany.com/",
+      "description": "Veloce Tech delivers custom website development, graphic design, and digital transformation solutions.",
+      "sameAs": []
     }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
-        :root {
-            --primary: #2d6a4f;
-            --primary-light: #40916c;
-            --accent: #d62828;
-            --dark: #1e1e1e;
-            --light: #f4f7f2;
-            --border: #d0d6cb;
-            --text: #2d2d2d;
-            --white: #fff;
+        /* HEADER COLOR SWAP */
+        .header {
+            background: var(--bg-primary);  /* cream */
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.5; color: var(--text); background: var(--white); }
-        a { text-decoration: none; color: inherit; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 12px; }
-        .section-padding { padding: 30px 0; }
+        .logo-img {
+            background: white;               /* white inside logo container */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
 
-        .header { background: var(--primary); color: white; padding: 10px 0; }
-        .header .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        .logo { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; }
-        .logo span { color: var(--accent); }
-        .search-bar { display: flex; flex: 1; max-width: 400px; margin-left: auto; margin-right: 10px; }
-        .search-bar input { flex: 1; padding: 6px 10px; border: none; border-radius: 3px 0 0 3px; font-size: 14px; }
-        .search-bar button { background: var(--accent); color: white; border: none; padding: 6px 15px; border-radius: 0 3px 3px 0; cursor: pointer; }
-        .header-links { display: flex; gap: 20px; align-items: center; font-size: 13px; }
-        .header-links a { color: white; font-weight: 500; cursor: pointer; }
-        .header-links a:hover { text-decoration: underline; }
-        .cart-icon { position: relative; cursor: pointer; }
-        .cart-count { background: var(--accent); border-radius: 50%; padding: 2px 6px; font-size: 11px; position: absolute; top: -10px; right: -12px; }
+        /* WHY CHOOSE US */
+        .why-choose {
+            background: white;
+            border-radius: 40px;
+            padding: 30px 25px;
+            margin: 20px 0;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-subtle);
+            text-align: center;
+        }
+        .why-choose h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 15px;
+        }
+        .why-choose p {
+            font-size: 14px;
+            color: #4a5568;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        .why-choose .highlight {
+            color: var(--brand-primary);
+            font-weight: 600;
+        }
 
-        .nav-bar { background: var(--light); border-bottom: 1px solid var(--border); }
-        .nav-links { display: flex; flex-wrap: wrap; list-style: none; justify-content: center; font-size: 13px; font-weight: 500; }
-        .nav-links li { padding: 8px 12px; border-right: 1px solid var(--border); cursor: pointer; }
-        .nav-links li:last-child { border-right: none; }
-        .nav-links li:hover { color: var(--primary); }
-        .nav-links li.active { color: var(--accent); font-weight: 700; }
+        /* TECH STACK */
+        .tech-stack-showcase {
+            padding: 30px 0;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .tech-item {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 8px;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+        .tech-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-subtle);
+        }
+        .tech-item i {
+            font-size: 1.8rem;
+            color: var(--brand-primary);
+            margin-bottom: 6px;
+        }
+        .tech-item span {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
 
-        .hero { background: #d8e2d4; padding: 22px 0; text-align: center; }
-        .hero h1 { font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
-        .hero p { font-size: 14px; color: #3a4a3c; margin-bottom: 10px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        /* Two code blocks side by side */
+        .code-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .code-preview {
+            background: #1a2634;
+            color: #e2e8f0;
+            border-radius: 16px;
+            padding: 18px 22px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+        }
 
-        .btn-primary { background: var(--accent); color: white; padding: 7px 18px; border-radius: 3px; font-weight: 600; font-size: 13px; display: inline-block; border: none; cursor: pointer; }
+        /* DEMO CARDS – fixed 4 columns on desktop, no gaps at end */
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-top: 25px;
+        }
+        .demo-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-subtle);
+        }
+        .demo-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+        }
+        .demo-info {
+            padding: 14px;
+        }
+        .demo-info h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        .demo-info p {
+            font-size: 10px;
+            color: #5a6a7a;
+            margin-bottom: 10px;
+        }
+        .demo-link {
+            display: inline-block;
+            background: var(--brand-primary);
+            color: white;
+            padding: 5px 16px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 600;
+            transition: all 0.2s;
+            border: 1px solid var(--brand-primary);
+        }
+        .demo-link:hover {
+            background: white;
+            color: var(--brand-primary);
+        }
 
-        .section-head { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 15px; border-bottom: 2px solid var(--accent); padding-bottom: 5px; display: inline-block; }
-
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 10px; }
-        .product-card { border: 1px solid var(--border); border-radius: 3px; overflow: hidden; background: white; transition: transform 0.2s; display: flex; flex-direction: column; }
-        .product-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-        .product-card img { width: 100%; height: 130px; object-fit: cover; }
-        .product-info { padding: 8px; flex: 1; display: flex; flex-direction: column; }
-        .product-info .name { font-size: 13px; font-weight: 600; color: var(--dark); height: 32px; overflow: hidden; }
-        .product-info .desc { font-size: 11px; color: #555; margin-bottom: 5px; flex: 1; }
-        .product-info .price { color: var(--primary); font-weight: 700; font-size: 14px; margin-top: auto; }
-        .product-info .old-price { text-decoration: line-through; color: #999; font-size: 12px; margin-left: 6px; }
-        .btn-cart { display: block; margin-top: 5px; background: var(--accent); color: white; text-align: center; padding: 6px; border-radius: 3px; font-size: 12px; font-weight: 600; cursor: pointer; border: none; }
-
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; font-size: 13px; margin-top: 20px; }
-        .info-card { background: var(--light); padding: 15px; border-radius: 4px; }
-        .info-card h4 { font-size: 14px; color: var(--primary); margin-bottom: 6px; }
-
-        .deal-strip { background: var(--accent); color: white; padding: 7px 0; font-size: 13px; text-align: center; margin: 15px 0; }
-
-        .cart-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 998; display: none; }
-        .cart-overlay.active { display: block; }
-        .cart-sidebar { position: fixed; top:0; right:-400px; width: 100%; max-width: 400px; height:100%; background: white; box-shadow: -4px 0 20px rgba(0,0,0,0.15); z-index: 999; transition: right 0.3s ease; display: flex; flex-direction: column; }
-        .cart-sidebar.open { right:0; }
-        .cart-header { padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h3 { font-size: 16px; }
-        .close-cart { background: none; border: none; font-size: 20px; cursor: pointer; }
-        .cart-items { flex: 1; overflow-y: auto; padding: 15px; }
-        .cart-item { display: flex; gap: 10px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); align-items: center; }
-        .cart-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 3px; }
-        .cart-item-info { flex: 1; }
-        .cart-item-info .item-name { font-size: 13px; font-weight: 600; }
-        .cart-item-info .item-price { font-size: 12px; color: var(--primary); }
-        .qty-control { display: flex; align-items: center; gap: 5px; margin-top: 4px; }
-        .qty-control button { background: var(--light); border: 1px solid var(--border); width: 24px; height: 24px; border-radius: 3px; cursor: pointer; font-weight: bold; }
-        .remove-item { color: var(--accent); cursor: pointer; font-size: 12px; margin-top: 4px; display: inline-block; }
-        .cart-footer { padding: 15px; border-top: 1px solid var(--border); }
-        .cart-total { font-weight: 700; font-size: 16px; margin-bottom: 10px; }
-        .btn-checkout { width: 100%; padding: 10px; background: var(--primary); color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; }
-
-        .modal-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index: 1000; display: none; justify-content: center; align-items: center; }
-        .modal-overlay.active { display: flex; }
-        .modal-box { background: white; padding: 20px; border-radius: 8px; width: 90%; max-width: 450px; }
-        .modal-box h3 { margin-bottom: 15px; }
-        .form-group { margin-bottom: 12px; }
-        .form-group label { font-size: 13px; display: block; margin-bottom: 3px; }
-        .form-group input, .form-group textarea { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 14px; }
-        .btn-submit { background: var(--accent); color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; }
-        .toggle-link { color: var(--primary); cursor: pointer; text-decoration: underline; font-size: 13px; margin-left: 5px; }
-
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 15px; }
-        .testimonial-card { background: white; border: 1px solid var(--border); padding: 12px; border-radius: 4px; font-size: 12px; }
-        .testimonial-card .quote { font-style: italic; color: #555; }
-        .testimonial-card .author { font-weight: 600; color: var(--primary); margin-top: 6px; }
-
-        .newsletter { background: var(--primary); color: white; padding: 20px 0; text-align: center; margin-top: 20px; }
-        .newsletter h3 { font-size: 16px; margin-bottom: 5px; }
-        .newsletter p { font-size: 13px; margin-bottom: 10px; }
-        .newsletter-form { display: flex; max-width: 400px; margin: 0 auto; }
-        .newsletter-form input { flex: 1; padding: 8px; border: none; border-radius: 3px 0 0 3px; font-size: 13px; }
-        .newsletter-form button { background: var(--accent); color: white; border: none; padding: 8px 18px; border-radius: 0 3px 3px 0; cursor: pointer; font-weight: 600; }
-
-        footer { background: var(--dark); color: #ccc; font-size: 12px; padding: 20px 0; }
-        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; }
-        .footer-grid h4 { color: white; font-size: 14px; margin-bottom: 8px; }
-        .footer-grid ul { list-style: none; }
-        .footer-grid ul li { margin-bottom: 4px; }
-        .footer-grid ul li a { color: #aaa; }
-        .footer-bottom { text-align: center; margin-top: 15px; padding-top: 10px; border-top: 1px solid #444; }
-
-        @media(max-width:768px) {
-            .header-links { display: none; }
-            .search-bar { max-width: 200px; }
-            .nav-links { overflow-x: auto; }
+        /* Responsive: switch to 2 or 1 columns on smaller screens */
+        @media (max-width: 900px) {
+            .demos-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .code-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 500px) {
+            .demos-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="container">
-            <a href="#" class="logo">Fresh<span>Mart</span></a>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search products...">
-                <button onclick="filterProducts()"><i class="fas fa-search"></i></button>
+        <nav class="navbar">
+            <a href="index.html" class="logo-img">
+                <img src="veloce log.jpeg" alt="Veloce Tech Logo">
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="services.html">Services</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="contact.html" class="btn btn-primary btn-small">Start Project</a>
+                </div>
             </div>
-            <div class="header-links" id="headerLinks">
-                <a id="accountLink" onclick="openAccountModal()"><i class="far fa-user"></i> <span id="accountText">My Account</span></a>
-                <a href="#" class="cart-icon" id="cartIcon"><i class="fas fa-shopping-cart"></i><span class="cart-count" id="cartCount">0</span></a>
-            </div>
-        </div>
+            <div class="hamburger" id="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+        </nav>
     </header>
-    <nav class="nav-bar">
-        <ul class="nav-links" id="aisleNav">
-            <li data-aisle="all" class="active">All Products</li>
-            <li data-aisle="dairy">Dairy & Eggs</li>
-            <li data-aisle="bakery">Bakery</li>
-            <li data-aisle="grains">Grains & Cereals</li>
-            <li data-aisle="beverages">Beverages</li>
-            <li data-aisle="snacks">Snacks</li>
-            <li data-aisle="household">Household</li>
-            <li data-aisle="personal">Personal Care</li>
-        </ul>
-    </nav>
 
-    <section class="hero">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <span class="hero-pre">Since 2018 · Digital Innovation Studio</span>
+                    <h1 class="hero-title">Design. Develop. <span class="title-accent">Transform.</span></h1>
+                    <p class="hero-description">Veloce Tech delivers comprehensive digital solutions — from custom website development and graphic design to full-scale digital transformation. We build beautiful, functional experiences that drive real business results.</p>
+                    <div class="hero-buttons">
+                        <a href="services.html" class="btn btn-primary">Explore Services →</a>
+                        <a href="portfolio.html" class="btn btn-outline">View Portfolio</a>
+                    </div>
+                    <div class="hero-stats">
+                        <span><i class="fas fa-check-circle"></i> 200+ Projects</span>
+                        <span><i class="fas fa-check-circle"></i> 50+ Clients</span>
+                        <span><i class="fas fa-check-circle"></i> 12 Countries</span>
+                        <span><i class="fas fa-check-circle"></i> 24/7 Support</span>
+                    </div>
+                </div>
+                <div class="hero-image-container">
+                    <img src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Veloce Tech team working on digital design">
+                </div>
+            </div>
+        </section>
+
+        <!-- WHY CHOOSE VELOCE TECH -->
         <div class="container">
-            <h1>FreshMart Supermarket — Your Family's Grocery Store</h1>
-            <p>From farm-fresh vegetables to everyday household essentials, we deliver quality, freshness, and value right to your doorstep across Nairobi. Open 7am‑9pm, 7 days a week.</p>
-        </div>
-    </section>
-
-    <main class="container section-padding">
-        <div class="deal-strip">
-            🔥 <strong>MIDWEEK SAVINGS:</strong> Buy 2 get 1 free on milk | 20% off cereals | KSh 50 off bread | Free delivery on orders over KSh 3,000
-        </div>
-
-        <h2 class="section-head" id="sectionTitle">All Products</h2>
-        <div class="product-grid" id="productGrid"></div>
-
-        <div class="info-grid">
-            <div class="info-card">
-                <h4><i class="fas fa-leaf"></i> Farm-Fresh Promise</h4>
-                <p>Our fruits and vegetables come directly from small‑scale farmers in Kiambu, Limuru, and Murang'a. From harvest to shelf in under 24 hours, ensuring peak freshness and supporting local agriculture.</p>
-            </div>
-            <div class="info-card">
-                <h4><i class="fas fa-truck"></i> Reliable Same‑Day Delivery</h4>
-                <p>Place your order before 5pm and we'll deliver within 2‑4 hours to any Nairobi estate. Our insulated vans keep perishables cool. Free delivery on orders over KSh 3,000.</p>
-            </div>
-            <div class="info-card">
-                <h4><i class="fas fa-tags"></i> SmartShopper Loyalty</h4>
-                <p>Earn 1 point for every KSh 100 spent. Collect 200 points and receive a KSh 500 voucher automatically credited to your account. Already over 8,000 happy members.</p>
-            </div>
-            <div class="info-card">
-                <h4><i class="fas fa-clock"></i> Convenient Shopping Hours</h4>
-                <p>We open 7am – 9pm Monday to Sunday, including public holidays. Our Eastlands, Westlands, and Karen branches offer free parking and friendly, multilingual staff ready to assist.</p>
+            <div class="why-choose">
+                <h2>Why clients <span style="color: var(--brand-primary);">choose Veloce Tech</span></h2>
+                <p>
+                    We're more than a design agency – we're a technology partner that understands both pixels and business. From sleek, conversion‑driven interfaces to robust back‑end systems, our team combines <span class="highlight">a decade of experience</span> with a relentless focus on quality, speed, and reliability. We don't just deliver websites; we deliver <span class="highlight">real‑world results</span> – increased sales, streamlined operations, and a digital presence that commands respect. With offices in Nairobi and Narok, we offer <span class="highlight">24/7 support</span>, transparent pricing, and a promise: if you're not satisfied, we make it right. No shortcuts, no excuses – just premium digital craftsmanship.
+                </p>
             </div>
         </div>
 
-        <div style="background: var(--light); padding: 15px; border-radius: 4px; margin-top: 20px; font-size: 13px; line-height: 1.6;">
-            <h2 class="section-head" style="margin-top:0;">About FreshMart Supermarket</h2>
-            <p>Founded in 2017 as a small family‑run grocery shop in Umoja Estate, FreshMart has grown into a trusted supermarket chain serving thousands of households across Nairobi. Our mission is simple: make quality groceries accessible and affordable to every Kenyan family.</p>
-            <p>We partner directly with over 50 local farmers and food producers to bring you the freshest produce at fair prices. Our meat and dairy products are sourced from certified Kenyan ranches, while our grains, flours, and cereals come from reputable millers. We also champion Kenyan brands, stocking a wide range of products from local manufacturers — from tea and coffee to snacks and cleaning supplies.</p>
-            <p>Beyond retail, FreshMart is committed to giving back. Our "Meals for Schools" initiative has provided over 10,000 meals to children in under‑resourced schools in Nairobi's Eastlands. We also run regular food drives and support community events. When you shop with us, you're helping to build a stronger, healthier Kenya.</p>
-        </div>
-
-        <div class="section-padding" style="padding-bottom: 10px;">
-            <h2 class="section-head">What Our Customers Say</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial-card">
-                    <p class="quote">"I switched to FreshMart six months ago and the difference is clear. Their vegetables stay fresh for days, and the delivery drivers are always polite. I particularly love their loyalty programme – I've already earned two vouchers this year."</p>
-                    <p class="author">— Mary W., Umoja</p>
+        <!-- Services Preview -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>What We Do</h2>
+                    <p class="section-subtitle">Three core disciplines, endless possibilities — from concept to code and everything between</p>
                 </div>
-                <div class="testimonial-card">
-                    <p class="quote">"As a restaurant owner, I order bulk supplies weekly. FreshMart's consistent quality and on‑time delivery are unmatched. They even accommodate special requests for large quantities of specific items. Truly a partner, not just a supplier."</p>
-                    <p class="author">— Chef Omondi, Westlands</p>
-                </div>
-                <div class="testimonial-card">
-                    <p class="quote">"I appreciate that FreshMart stocks products from local brands. I can find my favourite Kericho tea, Brookside milk, and even chapati flour from small Kenyan millers all in one place. It feels good to support local while getting great value."</p>
-                    <p class="author">— Jane K., Kilimani</p>
+                <div class="main-categories">
+                    <div class="category-card">
+                        <div class="category-image"><img src="https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Website Development"></div>
+                        <div class="category-content">
+                            <div class="category-icon"><i class="fas fa-code"></i></div>
+                            <h3>Website Design & Development</h3>
+                            <p class="category-desc">Custom websites, e‑commerce, web apps, and coded solutions.</p>
+                            <a href="services.html" class="learn-more">Learn more →</a>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-image"><img src="https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Graphic Design"></div>
+                        <div class="category-content">
+                            <div class="category-icon"><i class="fas fa-paint-brush"></i></div>
+                            <h3>Graphic Design</h3>
+                            <p class="category-desc">Logo design, brand identity, print, social media assets, and digital illustrations.</p>
+                            <a href="services.html" class="learn-more">Learn more →</a>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-image"><img src="https://images.pexels.com/photos/1779487/pexels-photo-1779487.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Hybrid Design and Development"></div>
+                        <div class="category-content">
+                            <div class="category-icon"><i class="fas fa-layer-group"></i></div>
+                            <h3>Combined / Hybrid</h3>
+                            <p class="category-desc">Projects requiring both design and development — HTML emails, coded UI, full‑stack.</p>
+                            <a href="services.html" class="learn-more">Learn more →</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="newsletter">
-            <h3>Stay Updated with FreshMart</h3>
-            <p>Subscribe to receive weekly deals, new product alerts, and exclusive vouchers.</p>
-            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thanks for subscribing! (Project)');">
-                <input type="email" placeholder="Your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
-        </div>
+        <!-- REAL PORTFOLIO PREVIEW – 8 cards, no gaps -->
+        <section class="section bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Our Latest Projects</h2>
+                    <p class="section-subtitle">Explore the interactive projects we built for real‑world industries</p>
+                </div>
+                <div class="demos-grid">
+                    <div class="demo-card">
+                        <img src="https://images.pexels.com/photos/261102/pexels-photo-261102.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Savannah Pride Hotel">
+                        <div class="demo-info">
+                            <h4>Savannah Pride Hotel</h4>
+                            <p>Luxury hotel with rooms, dining, and booking.</p>
+                            <a href="savannah-hotel.html" target="_blank" class="demo-link">View Project ↗</a>
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPwXMKgLGqOBcXoxqSCmVtVAohes47kZEClQ&s" alt="Amani Retail Shop">
+                        <div class="demo-info">
+                            <h4>Amani Retail Shop</h4>
+                            <p>General store with cart and checkout.</p>
+                            <a href="amani-retail.html" target="_blank" class="demo-link">View Project ↗</a>
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.pexels.com/photos/264636/pexels-photo-264636.jpeg?auto=compress&cs=tinysrgb&w=400" alt="FreshMart Supermarket">
+                        <div class="demo-info">
+                            <h4>FreshMart Supermarket</h4>
+                            <p>Grocery with search, cart, and loyalty.</p>
+                            <a href="freshmart.html" target="_blank" class="demo-link">View Project ↗</a>
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.pexels.com/photos/262918/pexels-photo-262918.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Nyama Choma Ranch">
+                        <div class="demo-info">
+                            <h4>Nyama Choma Ranch</h4>
+                            <p>Table‑side ordering and reservations.</p>
+                            <a href="nyamachoma-ranch.html" target="_blank" class="demo-link">View Project ↗</a>
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Miti Masters Carpentry">
+                        <div class="demo-info">
+                            <h4>Miti Masters Carpentry</h4>
+                            <p>Custom furniture with order builder.</p>
+                            <a href="miti-masters.html" target="_blank" class="demo-link">View Project ↗</a>
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.pexels.com/photos/4173251/pexels-photo-4173251.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Afya First Hospital">
+                        <div class="demo-info">
+                            <h4>Afya First Hospital</h4>
+                            <p>Medical appointment booking system.</p>
+                            <a href="afya-first-hospital.html" target="_blank" class="demo-link">View Project ↗</a>
+                        </div>
+                    </div>
+                    <div class="demo-card">
+                        <img src="https://images.pexels.com/photos/5212345/pexels-photo-5212345.jpeg?auto=compress&cs=tinysrgb&w=400" alt="ShuleMaster School System">
+                        <div class="demo-info">
+                            <h4>ShuleMaster</h4>
+                            <p>School management system – logins, fees, marks.</p>
+                            <a href="school-system.html" target="_blank" class="demo-link">View Project ↗</a>
+                        </div>
+                    </div>
+                    <!-- 8th card to fill the row -->
+                    <div class="demo-card" style="background: var(--brand-soft); border: 1px dashed var(--brand-primary);">
+                        <div class="demo-info">
+                            <h4 style="color:var(--brand-primary);">Your Project?</h4>
+                            <p>Let's build something amazing together.</p>
+                            <a href="contact.html" class="demo-link">Get Started ↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CTA -->
+        <section style="padding: 20px 0 35px;">
+            <div class="container">
+                <div class="cta-banner">
+                    <div><h3>Ready to start your project?</h3><p>From concept to completion — we're here to bring your vision to life.</p></div>
+                    <a href="contact.html" class="btn btn-primary btn-large">Start a Conversation →</a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <div class="cart-overlay" id="cartOverlay"></div>
-    <div class="cart-sidebar" id="cartSidebar">
-        <div class="cart-header">
-            <h3>Your Cart (<span id="cartItemCount">0</span>)</h3>
-            <button class="close-cart" id="closeCart">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems"><p style="text-align:center; color:#888;">Your cart is empty.</p></div>
-        <div class="cart-footer">
-            <div class="cart-total">Total: KSh <span id="cartTotal">0</span></div>
-            <button class="btn-checkout" id="btnCheckout">Proceed to Checkout</button>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="checkoutModal">
-        <div class="modal-box">
-            <h3>Checkout (Project)</h3>
-            <form id="checkoutForm" onsubmit="event.preventDefault(); completeOrder();">
-                <div class="form-group"><label>Full Name</label><input type="text" required></div>
-                <div class="form-group"><label>Phone (M-Pesa)</label><input type="tel" required></div>
-                <div class="form-group"><label>Delivery Estate / Area</label><input type="text" required></div>
-                <div class="form-group"><label>Additional Notes</label><textarea rows="2"></textarea></div>
-                <button type="submit" class="btn-submit">Place Order (Simulation)</button>
-                <button type="button" class="btn-submit" style="background:#666; margin-left:5px;" onclick="closeCheckout()">Cancel</button>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="accountModal">
-        <div class="modal-box">
-            <h3 id="accountModalTitle">Sign In</h3>
-            <form id="accountForm" onsubmit="event.preventDefault(); handleAccountSubmit();">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="accountName" placeholder="Enter your name" required>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Contacts</h4>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>velocetechcompany@gmail.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+254 787 764 095 | +254 720 718 752</span>
+                    </div>
                 </div>
-                <div class="form-group" id="emailGroup">
-                    <label>Email Address</label>
-                    <input type="email" id="accountEmail" placeholder="you@example.com">
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        <li><a href="services.html">Web Development and graphic design</a></li>
+                    </ul>
                 </div>
-                <button type="submit" class="btn-submit">Sign In</button>
-            </form>
-            <p style="font-size:12px; margin-top:10px;">
-                <span id="toggleText">Don't have an account?</span>
-                <span class="toggle-link" id="toggleAccountBtn" onclick="toggleAccountMode()">Sign Up</span>
-            </p>
-            <button type="button" class="btn-submit" style="background:#666; margin-top:10px;" onclick="closeAccountModal()">Cancel</button>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container footer-grid">
-            <div class="footer-col">
-                <h4>FreshMart Supermarket</h4>
-                <p>Your family's grocer since 2017. Quality, freshness, and value — right in your neighbourhood.</p>
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <a href="https://www.facebook.com/profile.php?id=61576404231383" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/velocetechcompany?igsh=dmxqd3Q2dGJ6Z2Np" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/veloce_tech" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://www.tiktok.com/@veloce_tech" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://linkedin.com/company/veloce-tech" target="_blank" rel="noopener noreferrer" style="color: white; font-size: 14px;"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="mailto:velocetechcompany@gmail.com" style="color: white; font-size: 14px;"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4>Customer Care</h4>
-                <ul><li><a href="#">Contact Us</a></li><li><a href="#">Delivery Info</a></li><li><a href="#">Return Policy</a></li><li><a href="#">FAQs</a></li></ul>
+            <div class="footer-bottom">
+                <p>© 2026 Veloce Tech Company. All rights reserved.</p>
             </div>
-            <div class="footer-col">
-                <h4>Our Branches</h4>
-                <ul><li>Eastlands – Umoja</li><li>Westlands – Rhapta Rd</li><li>Karen – Shopping Centre</li></ul>
-            </div>
-            <div class="footer-col">
-                <h4>Follow Us</h4>
-                <ul><li><a href="#"><i class="fab fa-facebook-f"></i> Facebook</a></li><li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li><li><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a></li></ul>
-            </div>
-        </div>
-        <div class="container footer-bottom">
-            <p>© 2026 FreshMart Supermarket · Nairobi, Kenya · Interactive sample built by Veloce Tech Company.</p>
         </div>
     </footer>
 
-    <script>
-        const products = [
-            { id:1, name:"Brookside UHT Milk 500ml (Pack 3)", desc:"Long life, full cream, rich calcium.", price:195, oldPrice:240, category:"dairy", img:"data:image/webp;base64,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" },
-            { id:2, name:"Supaloaf White Bread 400g", desc:"Soft, baked daily, no preservatives.", price:65, oldPrice:null, category:"bakery", img:"https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:4, name:"Pearl Basmati Rice 5kg", desc:"Aromatic long grain, perfect pilau.", price:980, oldPrice:null, category:"grains", img:"https://images.pexels.com/photos/4202325/pexels-photo-4202325.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:5, name:"Rina Cooking Oil 5L", desc:"Pure vegetable oil, cholesterol free.", price:1750, oldPrice:null, category:"grains", img:"https://images.pexels.com/photos/1153370/pexels-photo-1153370.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:6, name:"Jogoo Maize Meal 2kg", desc:"Fortified maize flour for ugali.", price:110, oldPrice:null, category:"grains", img:"data:image/jpeg;base64,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" },
-            { id:7, name:"Kericho Gold Tea (100 bags)", desc:"Premium Kenyan tea, strong blend.", price:340, oldPrice:390, category:"beverages", img:"https://images.pexels.com/photos/230477/pexels-photo-230477.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:8, name:"Dormans Coffee 250g", desc:"Rich roast, ground medium.", price:420, oldPrice:null, category:"beverages", img:"https://images.pexels.com/photos/302896/pexels-photo-302896.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:10, name:"OMO Washing Powder 500g", desc:"Stain removal, fresh scent.", price:120, oldPrice:150, category:"household", img:"https://images.pexels.com/photos/8532616/pexels-photo-8532616.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:11, name:"Blue Band Margarine 250g", desc:"Creamy spread, baking.", price:160, oldPrice:null, category:"dairy", img:"https://images.pexels.com/photos/108370/pexels-photo-108370.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:12, name:"Weetabix Cereal 450g", desc:"Wholegrain breakfast biscuits.", price:320, oldPrice:360, category:"grains", img:"https://images.pexels.com/photos/1092730/pexels-photo-1092730.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:13, name:"Menengai Soap Bar 175g", desc:"Multi‑purpose, 6‑pack.", price:180, oldPrice:null, category:"personal", img:"https://images.pexels.com/photos/3737592/pexels-photo-3737592.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:14, name:"Vaseline Lotion 400ml", desc:"Deep moisture, aloe vera.", price:380, oldPrice:null, category:"personal", img:"https://images.pexels.com/photos/4465125/pexels-photo-4465125.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:15, name:"Sunlight Dish Wash 500ml", desc:"Lemon fresh, cuts grease.", price:140, oldPrice:null, category:"household", img:"data:image/jpeg;base64,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" },
-            { id:16, name:"Maziwa Lala 1L (Fermented)", desc:"Traditional cultured milk.", price:98, oldPrice:null, category:"dairy", img:"https://images.pexels.com/photos/128408/pexels-photo-128408.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:17, name:"Mandazi Bites 6 pieces", desc:"Freshly baked, coconut flavour.", price:70, oldPrice:null, category:"bakery", img:"https://images.pexels.com/photos/14107/pexels-photo-14107.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:18, name:"Elianto Corn Oil 1L", desc:"Light taste, ideal for frying.", price:360, oldPrice:null, category:"grains", img:"https://images.pexels.com/photos/4113834/pexels-photo-4113834.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:19, name:"Tusker Malt Can 330ml", desc:"Premium Kenyan beer.", price:210, oldPrice:null, category:"beverages", img:"https://images.pexels.com/photos/1089934/pexels-photo-1089934.jpeg?auto=compress&cs=tinysrgb&w=300" },
-            { id:20, name:"Royco Mchuzi Mix 50g", desc:"Beef flavour seasoning.", price:25, oldPrice:null, category:"snacks", img:"data:image/jpeg;base64,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" },
-        ];
-
-        let cart = [];
-        let currentAisle = 'all';
-        let isLoggedIn = false;
-        let currentUser = '';
-        let accountMode = 'login';
-
-        const productGrid = document.getElementById('productGrid');
-        const cartItemsEl = document.getElementById('cartItems');
-        const cartCountEl = document.getElementById('cartCount');
-        const cartItemCountEl = document.getElementById('cartItemCount');
-        const cartTotalEl = document.getElementById('cartTotal');
-        const cartSidebar = document.getElementById('cartSidebar');
-        const cartOverlay = document.getElementById('cartOverlay');
-        const checkoutModal = document.getElementById('checkoutModal');
-        const accountModal = document.getElementById('accountModal');
-        const sectionTitle = document.getElementById('sectionTitle');
-        const accountLink = document.getElementById('accountLink');
-        const accountText = document.getElementById('accountText');
-        const accountModalTitle = document.getElementById('accountModalTitle');
-        const toggleAccountBtn = document.getElementById('toggleAccountBtn');
-        const toggleText = document.getElementById('toggleText');
-        const emailGroup = document.getElementById('emailGroup');
-
-        function renderProducts(filterText = '') {
-            const filtered = products.filter(p => {
-                const matchAisle = currentAisle === 'all' || p.category === currentAisle;
-                const matchSearch = filterText === '' || p.name.toLowerCase().includes(filterText.toLowerCase());
-                return matchAisle && matchSearch;
-            });
-            productGrid.innerHTML = filtered.map(p => `
-                <div class="product-card">
-                    <img src="${p.img}" alt="${p.name}">
-                    <div class="product-info">
-                        <div class="name">${p.name}</div>
-                        <div class="desc">${p.desc}</div>
-                        <div>
-                            <span class="price">KSh ${p.price}</span>
-                            ${p.oldPrice ? `<span class="old-price">KSh ${p.oldPrice}</span>` : ''}
-                        </div>
-                        <button class="btn-cart" onclick="addToCart(${p.id})">Add to Cart</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const existing = cart.find(item => item.id === id);
-            if (existing) {
-                existing.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
-            updateCartUI();
-            openCart();
-        }
-
-        function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
-            updateCartUI();
-        }
-
-        function changeQty(id, delta) {
-            const item = cart.find(item => item.id === id);
-            if (item) {
-                item.quantity += delta;
-                if (item.quantity <= 0) removeFromCart(id);
-            }
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCountEl.textContent = totalItems;
-            cartItemCountEl.textContent = totalItems;
-            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotalEl.textContent = total.toLocaleString();
-
-            if (cart.length === 0) {
-                cartItemsEl.innerHTML = '<p style="text-align:center; color:#888;">Your cart is empty.</p>';
-            } else {
-                cartItemsEl.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <img src="${item.img}" alt="${item.name}">
-                        <div class="cart-item-info">
-                            <div class="item-name">${item.name}</div>
-                            <div class="item-price">KSh ${item.price} each</div>
-                            <div class="qty-control">
-                                <button onclick="changeQty(${item.id}, -1)">-</button>
-                                <span>${item.quantity}</span>
-                                <button onclick="changeQty(${item.id}, 1)">+</button>
-                            </div>
-                            <span class="remove-item" onclick="removeFromCart(${item.id})">Remove</span>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function openCart() {
-            cartSidebar.classList.add('open');
-            cartOverlay.classList.add('active');
-        }
-
-        function closeCart() {
-            cartSidebar.classList.remove('open');
-            cartOverlay.classList.remove('active');
-        }
-
-        function openCheckout() {
-            checkoutModal.classList.add('active');
-            closeCart();
-        }
-
-        function closeCheckout() {
-            checkoutModal.classList.remove('active');
-        }
-
-        function completeOrder() {
-            alert('Order placed successfully! (This is a project – no real order will be processed.)');
-            cart = [];
-            updateCartUI();
-            closeCheckout();
-        }
-
-        function filterProducts() {
-            const searchText = document.getElementById('searchInput').value;
-            renderProducts(searchText);
-        }
-
-        function openAccountModal() {
-            if (isLoggedIn) {
-                if (confirm(`You are logged in as ${currentUser}. Do you want to log out?`)) {
-                    isLoggedIn = false;
-                    currentUser = '';
-                    updateAccountUI();
-                    alert('You have been logged out.');
-                }
-                return;
-            }
-            document.getElementById('accountName').value = '';
-            document.getElementById('accountEmail').value = '';
-            accountMode = 'login';
-            updateAccountModalMode();
-            accountModal.classList.add('active');
-        }
-
-        function closeAccountModal() {
-            accountModal.classList.remove('active');
-        }
-
-        function toggleAccountMode() {
-            accountMode = accountMode === 'login' ? 'signup' : 'login';
-            updateAccountModalMode();
-        }
-
-        function updateAccountModalMode() {
-            if (accountMode === 'login') {
-                accountModalTitle.textContent = 'Sign In';
-                emailGroup.style.display = 'none';
-                document.getElementById('accountEmail').required = false;
-                toggleText.textContent = "Don't have an account?";
-                toggleAccountBtn.textContent = 'Sign Up';
-            } else {
-                accountModalTitle.textContent = 'Create Account';
-                emailGroup.style.display = 'block';
-                document.getElementById('accountEmail').required = true;
-                toggleText.textContent = "Already have an account?";
-                toggleAccountBtn.textContent = 'Sign In';
-            }
-        }
-
-        function handleAccountSubmit() {
-            const name = document.getElementById('accountName').value.trim();
-            if (!name) return;
-            currentUser = name;
-            isLoggedIn = true;
-            updateAccountUI();
-            closeAccountModal();
-            alert(`Welcome, ${currentUser}! You are now signed in. (Project)`);
-        }
-
-        function updateAccountUI() {
-            if (isLoggedIn) {
-                accountText.innerHTML = `Welcome, ${currentUser}`;
-                accountLink.querySelector('i').className = 'fas fa-user-check';
-            } else {
-                accountText.textContent = 'My Account';
-                accountLink.querySelector('i').className = 'far fa-user';
-            }
-        }
-
-        document.getElementById('aisleNav').addEventListener('click', (e) => {
-            if (e.target.tagName === 'LI') {
-                document.querySelectorAll('#aisleNav li').forEach(li => li.classList.remove('active'));
-                e.target.classList.add('active');
-                currentAisle = e.target.getAttribute('data-aisle');
-                sectionTitle.textContent = currentAisle === 'all' ? 'All Products' : e.target.textContent;
-                renderProducts(document.getElementById('searchInput').value);
-            }
-        });
-
-        document.getElementById('cartIcon').addEventListener('click', openCart);
-        document.getElementById('closeCart').addEventListener('click', closeCart);
-        document.getElementById('cartOverlay').addEventListener('click', closeCart);
-        document.getElementById('btnCheckout').addEventListener('click', () => {
-            if (cart.length === 0) {
-                alert('Your cart is empty!');
-                return;
-            }
-            openCheckout();
-        });
-
-        document.getElementById('checkoutModal').addEventListener('click', function(e) {
-            if (e.target === this) closeCheckout();
-        });
-        document.getElementById('accountModal').addEventListener('click', function(e) {
-            if (e.target === this) closeAccountModal();
-        });
-
-        renderProducts();
-        updateCartUI();
-        updateAccountUI();
-    </script>
+    <a href="https://wa.me/254740682321?text=Hello%20Veloce%20Tech%20Company%2C%20I%20would%20like%20to%20inquire%20about%20your%20services."
+       class="whatsapp-float"
+       target="_blank"
+       rel="noopener noreferrer">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <script src="script.js"></script>
 </body>
 </html>
